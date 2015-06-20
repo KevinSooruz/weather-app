@@ -27,6 +27,7 @@
 </head>
 <body>
     
+    <!--Global container-->
     <div id="all" class="container-fluid" ng-controller="allCtrl" ng-view></div>
     
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
