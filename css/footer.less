@@ -1,0 +1,25 @@
+#all{
+    #footer{
+        .absolute;
+        bottom: 0; left: 0; right: 0;
+        height: @heightHeader;
+        .center;
+        
+        .tab{
+            .bgCol(@blueElem);
+            height: 100%;
+            border-top: 3px solid @blueElem;
+            
+            &.active{
+                .bgCol(@blueActiv);
+                border-top: 3px solid @green;
+            }
+            
+            i{
+                color: @white;
+                .fontSize(40px);
+                margin-top: 20px;
+            }
+        }
+    }
+}

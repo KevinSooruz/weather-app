@@ -13,3 +13,5 @@
 <div id="block2" class="container-fluid block">
     
 </div>
+
+<footer></footer>

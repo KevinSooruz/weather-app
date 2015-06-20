@@ -23,8 +23,8 @@ module.exports = function(grunt) {
         },
         target: {
             files: {
-                "js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js"],
-                "dist/js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js"]
+                "js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js"],
+                "dist/js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js"]
             }
         }
     },
@@ -35,7 +35,8 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-                "dist/views/home.php": "views/home.php"
+                "dist/views/home.php": "views/home.php",
+                "dist/views/header.php": "views/header.php"
             }
         }
     },
@@ -46,7 +47,7 @@ module.exports = function(grunt) {
             tasks: ["less:compile"]
         },
         script: {
-            files: "js/controller/*.js",
+            files: ["js/controller/*.js", "js/directive/*.js"],
             tasks: ["uglify"]
         },
         html: {
