@@ -22,7 +22,7 @@
 <link rel="apple-touch-startup-image" sizes="1024x748" href="images/splash-screen-4.png" />
 <!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">-->
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<link href="http://fonts.googleapis.com/css?family=Lato:400,300,900" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" type="image/jpg" href="images/favico.jpg">
 </head>
 <body>

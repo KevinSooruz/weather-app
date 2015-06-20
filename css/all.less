@@ -1,0 +1,73 @@
+//////////////////// Font ////////////////////
+.lato{
+    font-family: 'Lato', sans-serif;
+}
+
+.uppercase{
+    text-transform: uppercase;
+}
+
+.f300{
+    font-weight: 300;
+}
+
+.f400{
+    font-weight: 400;
+}
+
+.f900{
+    font-weight: 900;
+}
+
+//////////////////// CSS Spec ////////////////////
+@blueHard: #1f253d;
+@greyText: #9099b7;
+@greyInput: #50597b;
+@white: #fff;
+@green: #11a8ab;
+
+@heightHeader: 80px;
+
+.noShadow{
+    .box-shadow(@shadow: none);
+}
+
+.bgCol(@color){
+    background-color: @color;
+}
+
+.center{
+    text-align: center;
+}
+
+.absolute{
+    position: absolute;
+}
+
+.fontSize(@size){
+    font-size: @size;
+}
+
+//////////////////// CSS Général ////////////////////
+body{
+    .lato;
+    .f400;
+    .fontSize(16px);
+    
+    #all{
+        overflow: hidden;
+        .absolute;
+        top: 0; bottom: 0; left: 0; right: 0;
+        .bgCol(@blueHard);
+        
+        .btn{
+            .uppercase;
+            .fontSize(16px);
+        }
+        
+        .btnGreen{
+            .bgCol(@green);
+            color: @white;
+        }
+    }
+}
