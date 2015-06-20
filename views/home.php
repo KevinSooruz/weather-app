@@ -15,7 +15,9 @@
 
 <!--Second block-->
 <div id="block2" class="container-fluid block" ng-class="{show: result == true}">
-    
+    <ul>
+        <li ng-repeat="day in days"></li>
+    </ul>
 </div>
 
 <footer></footer>

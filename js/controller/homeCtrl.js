@@ -52,6 +52,9 @@ app.controller("homeCtrl", function($scope, $http){
                 // Modification de l'état de la requête
                 $scope.result = true;
                 
+                // Envoi des données de la réponse au front
+                $scope.days = response;
+                
             }else{
                 
                 return;
