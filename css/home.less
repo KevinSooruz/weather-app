@@ -3,6 +3,7 @@
         .absolute;
         top: @heightHeader; bottom: 0; left: 0; right: 0;
         overflow-y: auto;
+        .bgCol(@blueHard);
         -webkit-overflow-scrolling: touch;
         
         form{
@@ -24,19 +25,19 @@
             }
 
             ::-webkit-input-placeholder {
-                color: @white;
+                color: @greyText;
             }
             :-moz-placeholder {
                 /* FF 4-18 */
-                color: @white;
+                color: @greyText;
             }
             ::-moz-placeholder {
                 /* FF 19+ */
-                color: @white;
+                color: @greyText;
             }
             :-ms-input-placeholder {
                 /* IE 10+ */
-                color: @white;
+                color: @greyText;
             }
         }
         
@@ -68,5 +69,10 @@
     
     #block2{
         .translate3d(100%; 0; 0);
+        
+        &.show{
+            .translate3d(0; 0; 0);
+            .transition-duration(600ms);
+        }
     }
 }
