@@ -1,5 +1,7 @@
+// Initialisation
 var app = angular.module("app", ["ngRoute", "ngTouch"]);
 
+// Gestion des routes
 app.config(["$routeProvider", function($routeProvider){
         
         $routeProvider.when("/", {
@@ -11,4 +13,5 @@ app.config(["$routeProvider", function($routeProvider){
         
 }]);
 
+// Global controller
 app.controller("allCtrl", function(){});
