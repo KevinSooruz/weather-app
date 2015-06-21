@@ -25,10 +25,13 @@
 @blueActiv: #50597b;
 @greyText: #9099b7;
 @greyInput: #50597b;
-@white: #fff;
 @green: #11a8ab;
+/////////////// New colors ///////////////
+@tp: transparent;
+@white: #fff;
+@blueBg: rgba(67, 62, 128, 0.5);
 
-@heightHeader: 80px;
+@heightHeader: 110px;
 
 .noShadow{
     .box-shadow(@shadow: none);
@@ -50,19 +53,39 @@
     font-size: @size;
 }
 
+.border-radius(@radius){
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    -ms-border-radius: @radius;
+    -o-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.left{
+    float: left;
+}
+
+.right{
+    float: right;
+}
+
 //////////////////// CSS Général ////////////////////
 body{
     .lato;
     .f400;
     .fontSize(16px);
-    color: @greyText;
-    .bgCol(@blueHard);
+    color: @white;
+    .bgCol(@white);
+    .absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
     
     #all{
         overflow: hidden;
         .absolute;
         top: 0; bottom: 0; left: 0; right: 0;
-        .bgCol(@blueHard);
+        background-image: url("../images/bg.jpg");
+        background-position: center center;
+        background-size: cover;
         
         .btn{
             .uppercase;
@@ -73,9 +96,15 @@ body{
             }
         }
         
-        .btnGreen{
-            .bgCol(@green);
+        .btnGhostWhite{
+            .bgCol(@tp);
             color: @white;
+            border: 1px solid @white;
+            .border-radius(0px);
+        }
+        
+        .btnGhostBig{
+            padding: 10px 45px;
         }
         
         .none{

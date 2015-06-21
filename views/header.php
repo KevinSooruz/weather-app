@@ -1,3 +1,3 @@
-<div id="header">
-    <h1>Weather app</h1>
+<div id="header" ng-class="{hid: result === true}">
+    <h1>City Weather</h1>
 </div>

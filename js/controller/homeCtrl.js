@@ -55,6 +55,9 @@ app.controller("homeCtrl", function($scope, $http){
                 // Envoi des données de la réponse au front
                 $scope.days = response;
                 
+                $scope.cityDay = response.city.name;
+                $scope.cityCountry = response.city.country;
+                
             }else{
                 
                 return;
