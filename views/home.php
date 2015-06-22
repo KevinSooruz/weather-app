@@ -10,7 +10,7 @@
                     <label for="city"><i class="glyphicon glyphicon-map-marker"></i></label>
                 </div>
                 <div class="col-md-11 col-sm-10 col-xs-10">
-                    <input type="search" placeholder="Ville" class="form-control" name="city" ng-model="city" ng-minlength="3" />
+                    <input type="search" placeholder="Ville" autocomplete="off" class="form-control" name="city" ng-model="city" ng-minlength="3" />
                 </div>
             </div>
             <button class="btn btnGhostWhite btnGhostBig" type="submit" ng-click="search(city)" ng-class="{none: goSearch === true}">Rechercher</button>
