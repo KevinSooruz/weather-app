@@ -91,6 +91,11 @@
             .transition-duration(600ms);
         }
         
+        &.hideResponse{
+            .translate3d(100%; 0; 0);
+            .transition-duration(600ms);
+        }
+        
         #weatherDay{
             background-image: url("../images/weather-day.jpg");
             background-position: center center;
@@ -100,9 +105,23 @@
             
             #city{
                 .center;
-                .opacity(0.6);
                 .uppercase;
+                .f300;
                 padding: 25px 0;
+                
+                .glyphicon-chevron-left{
+                    .absolute;
+                    top: 15px; left: 15px;
+                    .fontSize(18px);
+                }
+            }
+            
+            #temperature{
+                display: inline-block;
+                width: 100%;
+                .center;
+                .f300;
+                .fontSize(90px);
             }
         }
     }

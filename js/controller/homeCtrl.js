@@ -11,6 +11,13 @@ app.controller("homeCtrl", function($scope, $http){
     // Initialisation de la réponse de la requête
     $scope.result = false;
     
+    // Retour accueil
+    $scope.hideResult = function(){
+        
+        $scope.result = false;
+        
+    };
+    
     // Fonction recherche ville
     $scope.search = function(city){
         
@@ -55,8 +62,10 @@ app.controller("homeCtrl", function($scope, $http){
                 // Envoi des données de la réponse au front
                 $scope.days = response;
                 
+                // Initialisation des éléments du jour actuel
                 $scope.cityDay = response.city.name;
                 $scope.cityCountry = response.city.country;
+                $scope.temperatureDay = (response.list[0].temp.day).toFixed(0);
                 
             }else{
                 

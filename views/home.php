@@ -22,10 +22,20 @@
 </div>
 
 <!--Second block-->
-<div id="block2" class="block" ng-class="{show: result === true}">
+<div id="block2" class="block" ng-class="{show: result === true, hideResponse: result === false}">
     <div id="weatherDay">
         <div class="filter filterBlue">
-            <div id="city">{{cityDay}} / {{cityCountry}}</div>
+            <div id="city">
+                <i class="glyphicon glyphicon-chevron-left" ng-click="hideResult()"></i>
+                <span>{{cityDay}} / {{cityCountry}}</span>
+            </div>
+            <div id="date">
+                
+            </div>
+            <div id="weather">
+                
+            </div>
+            <span id="temperature">{{temperatureDay}}°C</span>
         </div>
     </div>
     <div id="otherDays" class="col-md-12">
