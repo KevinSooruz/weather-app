@@ -1,0 +1,66 @@
+#all{
+    #block2{
+        top: 0;
+        .translate3d(100%; 0; 0);
+        .bgCol(@white);
+        
+        &.show{
+            .translate3d(0; 0; 0);
+            .transition-duration(600ms);
+        }
+        
+        &.hideResponse{
+            .translate3d(100%; 0; 0);
+            .transition-duration(600ms);
+        }
+        
+        #weatherDay{
+            background-image: url("../images/weather-day.jpg");
+            background-position: center center;
+            background-size: cover;
+            height: 80%; width: 100%;
+            position: relative;
+            
+            #city{
+                .center;
+                .uppercase;
+                .f300;
+                padding: 45px 15px 25px;
+                
+                .glyphicon-chevron-left{
+                    .absolute;
+                    top: 15px; left: 15px;
+                    .fontSize(18px);
+                }
+            }
+            
+            #date{
+                span{
+                    display: inline-block;
+                    width: 100%;
+                }
+                
+                #dateDate{
+                    .opacity(0.6);
+                    .f300;
+                    .fontSize(12px);
+                }
+            }
+            
+            #weather{
+                
+                #iconDay{
+                    width: 65px;
+                }
+            }
+            
+            #temperature{
+                display: inline-block;
+                width: 100%;
+                .center;
+                .fontSize(90px);
+            }
+        }
+    }
+}
+

@@ -29,13 +29,16 @@
                 <i class="glyphicon glyphicon-chevron-left" ng-click="hideResult()"></i>
                 <span>{{cityDay}} / {{cityCountry}}</span>
             </div>
-            <div id="date">
-                
+            <div>
+                <div id="date" class="col-md-6 col-sm-6 col-xs-6 left">
+                    <span id="dateDay">{{dayActif}}</span>
+                    <span id="dateDate">{{dateActif}}</span>
+                </div>
+                <div id="weather" class="col-md-6 col-sm-6 col-xs-6 right">
+                    <img id="iconDay" src="images/icons/{{iconDayActif}}.png" />
+                </div>
             </div>
-            <div id="weather">
-                
-            </div>
-            <span id="temperature">{{temperatureDay}}°C</span>
+            <div id="temperature">{{temperatureDay}}°C</div>
         </div>
     </div>
     <div id="otherDays" class="col-md-12">

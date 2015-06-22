@@ -1,21 +1,64 @@
 @media screen and (min-width: 771px){
-    #all{
-        #block2{
-            #weatherDay{
-                #city{
-                    .fontSize(36px);
-                    
-                    .glyphicon-chevron-left{
-                        .fontSize(25px);
-                        
-                        &:hover{
-                            cursor: pointer;
+    body{
+        .fontSize(18px);
+        
+        .btn{
+            .fontSize(18px);
+        }
+        
+        .form-control{
+            .fontSize(16px);
+        }
+        
+        #all{
+            .block{
+                .content{
+                    form{
+                        label{
+                            .fontSize(35px);
                         }
                     }
                 }
-                
-                #temperature{
-                    .fontSize(200px);
+            }
+            
+            #block2{
+                #weatherDay{
+                    #city{
+                        .fontSize(36px);
+                        padding: 25px 15px;
+
+                        .glyphicon-chevron-left{
+                            .fontSize(25px);
+
+                            &:hover{
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    #date{
+                        padding-left: 80px;
+
+                        #dateDay{
+                            .fontSize(35px);
+                        }
+
+                        #dateDate{
+                            .fontSize(22px);
+                        }
+                    }
+
+                    #weather{
+                        padding-right: 80px;
+
+                        #iconDay{
+                            width: 130px;
+                        }
+                    }
+
+                    #temperature{
+                        .fontSize(200px);
+                    }
                 }
             }
         }

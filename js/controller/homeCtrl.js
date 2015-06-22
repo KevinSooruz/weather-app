@@ -66,6 +66,9 @@ app.controller("homeCtrl", function($scope, $http){
                 $scope.cityDay = response.city.name;
                 $scope.cityCountry = response.city.country;
                 $scope.temperatureDay = (response.list[0].temp.day).toFixed(0);
+                $scope.iconDayActif = response.list[0].weather[0].icon;
+                $scope.dayActif = day();
+                $scope.dateActif = date();
                 
             }else{
                 
@@ -83,6 +86,26 @@ app.controller("homeCtrl", function($scope, $http){
             console.log(config);
             
         });
+        
+    }
+    
+    // Date
+    var today = new Date();
+    
+    function day(){
+        
+        var days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+        var day = today.getDay();
+        
+        return days[day];
+        
+    }
+    
+    function date(){
+        
+        var months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+        
+        return today.getDate() + " " + months[8] + " " + today.getFullYear();
         
     }
     
