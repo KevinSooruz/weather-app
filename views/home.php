@@ -1,8 +1,7 @@
-<header></header>
-
 <!--First block-->
-<div id="block1" class="container-fluid block">
-    <div class="col-md-12">
+<div id="block1" class="block">
+    <header></header>
+    <div class="content container">
         <p>Recherchez une ville pour afficher la m&eacute;t&eacute;o</p>
         <form name="searchCity">
             <div class="row">
@@ -25,7 +24,7 @@
 <!--Second block-->
 <div id="block2" class="block" ng-class="{show: result === true}">
     <div id="weatherDay">
-        <div class="filter">
+        <div class="filter filterBlue">
             <div id="city">{{cityDay}} / {{cityCountry}}</div>
         </div>
     </div>
