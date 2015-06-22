@@ -1,3 +1,3 @@
-<div id="header" ng-class="{hid: result === true}">
+<div id="header">
     <h1>City Weather</h1>
 </div>

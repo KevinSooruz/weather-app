@@ -1,7 +1,7 @@
 <header></header>
 
 <!--First block-->
-<div id="block1" class="container-fluid block" ng-class="{hid: result === true}">
+<div id="block1" class="container-fluid block">
     <div class="col-md-12">
         <p>Recherchez une ville pour afficher la m&eacute;t&eacute;o</p>
         <form name="searchCity">
