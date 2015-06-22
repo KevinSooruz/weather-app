@@ -1,8 +1,11 @@
 // Home controller
 app.controller("homeCtrl", function($scope, $http){
     
-    // http://api.openweathermap.org/data/2.5/forecast/daily?q=bordeaux&mode=json&units=metric&cnt=10&lang=fr&type=accurate
+    // today
     // http://api.openweathermap.org/data/2.5/find?q=bordeaux&units=metric&lang=fr&type=accurate
+    // daily
+    // http://api.openweathermap.org/data/2.5/forecast/daily?q=bordeaux&mode=json&units=metric&cnt=10&lang=fr&type=accurate
+    // weather conditions
     // http://openweathermap.org/weather-conditions
     
     // Initialisation du loader
@@ -31,7 +34,7 @@ app.controller("homeCtrl", function($scope, $http){
         $scope.goSearch = true;
         
         // Lancement de la recherche = requête api
-        var url = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=10&lang=fr&type=accurate";
+        var url = "http://api.openweathermap.org/data/2.5/find?q=" + city + "&units=metric&lang=fr&type=accurate";
         api(url);
         
     };
@@ -63,12 +66,14 @@ app.controller("homeCtrl", function($scope, $http){
                 $scope.days = response;
                 
                 // Initialisation des éléments du jour actuel
-                $scope.cityDay = response.city.name;
-                $scope.cityCountry = response.city.country;
-                $scope.temperatureDay = (response.list[0].temp.day).toFixed(0);
+                $scope.cityDay = response.list[0].name;
+                $scope.cityCountry = response.list[0].sys.country;
+                $scope.temperatureDay = (response.list[0].main.temp).toFixed(0);
                 $scope.iconDayActif = response.list[0].weather[0].icon;
                 $scope.dayActif = day();
                 $scope.dateActif = date();
+                $scope.humidityDay = (response.list[0].main.humidity).toFixed(0);
+                $scope.pressureDay = (response.list[0].main.pressure).toFixed(0);
                 
             }else{
                 
