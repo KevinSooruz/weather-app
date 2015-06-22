@@ -91,21 +91,18 @@ app.controller("homeCtrl", function($scope, $http){
     
     // Date
     var today = new Date();
+    var days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    var months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
     
     function day(){
         
-        var days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-        var day = today.getDay();
-        
-        return days[day];
+        return days[today.getDay()];
         
     }
     
     function date(){
         
-        var months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-        
-        return today.getDate() + " " + months[8] + " " + today.getFullYear();
+        return today.getDate() + " " + months[today.getMonth()] + " " + today.getFullYear();
         
     }
     
