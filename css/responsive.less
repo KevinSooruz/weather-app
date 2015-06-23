@@ -23,10 +23,12 @@
             
             #block2{
                 #weatherDay{
+                    height: 75%;
+                    
                     #city{
                         .fontSize(36px);
                         padding: 25px 15px;
-                        margin-bottom: 35px;
+                        margin-bottom: 25px;
 
                         .glyphicon-chevron-left{
                             .fontSize(25px);
@@ -68,6 +70,36 @@
                     
                     #humPress{
                         .fontSize(22px);
+                    }
+                }
+                
+                #otherDays{
+                    ul{
+                        li{
+                            margin-top: 20px;
+                            padding-bottom: 10px;
+                            
+                            .dates{
+                                .otherDay{
+                                    .fontSize(25px);
+                                }
+                                
+                                .otherDate{
+                                    .fontSize(18px);
+                                }
+                            }
+                            
+                            .temps{
+                                .iconOtherDays{
+                                    width: 80px;
+                                    margin-right: 15px;
+                                }
+                                
+                                .tempOtherDay{
+                                    .fontSize(40px);
+                                }
+                            }
+                        }
                     }
                 }
             }

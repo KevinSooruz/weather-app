@@ -89,8 +89,9 @@ app.controller("homeCtrl", function($scope, $http){
                     $scope.iconDayActif = response.list[0].weather[0].icon;
                     $scope.dayActif = day(today.getDay());
                     $scope.dateActif = date(today.getDate(), today.getMonth(), today.getFullYear());
-                    $scope.humidityDay = (response.list[0].main.humidity).toFixed(0);
-                    $scope.pressureDay = (response.list[0].main.pressure).toFixed(0);
+                    $scope.humidityDay = response.list[0].main.humidity.toFixed(0);
+                    $scope.pressureDay = response.list[0].main.pressure.toFixed(0);
+                    $scope.speedDay = windSpeed(response.list[0].wind.speed).toFixed(0);
                     
                 }else if(typeDay === "otherDays"){
                     
@@ -107,7 +108,8 @@ app.controller("homeCtrl", function($scope, $http){
                         
                             day: findNextDay(i),
                             date: findNextDate(i),
-                            temp: response.list[i].temp.day.toFixed(0)
+                            temp: response.list[i].temp.day.toFixed(0),
+                            icon: response.list[i].weather[0].icon
 
                         });
                         
@@ -248,6 +250,14 @@ app.controller("homeCtrl", function($scope, $http){
         }
         
         return date(newDate, newMonth, newYear);
+        
+    };
+    
+    // Fonction de calcul de la vitesse du vent (1 m/s = 3.6 km/h)
+    var windSpeed = function(speed){
+        
+        var speedKm = speed * 3.6;
+        return speedKm;
         
     };
     

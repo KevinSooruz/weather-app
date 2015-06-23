@@ -2,6 +2,49 @@
     #block2{
         #otherDays{
             color: @text;
+            
+            ul{
+                margin: 0;
+                padding: 0;
+                
+                li{
+                    margin: 15px 0 0 0;
+                    padding: 0 0 10px 0;
+                    list-style-type: none;
+                    border-bottom: 1px solid @extraLight;
+                    
+                    .dates{
+                        .otherDay{
+                            color: @textHard;
+                        }
+                        
+                        .otherDate{
+                            .fontSize(12px);
+                            .f300;
+                        }
+                    }
+                    
+                    .temps{
+                        .right;
+                        margin-top: 5px;
+                        
+                        .iconOtherDays{
+                            width: 35px;
+                            margin-right: 5px;
+                            margin-top: -5px;
+                        }
+                        
+                        .tempOtherDay{
+                            color: @textHard;
+                            .fontSize(20px);
+                        }
+                    }
+                    
+                    &:last-of-type{
+                        border: none;
+                    }
+                }
+            }
         }
     }
 }

@@ -35,19 +35,24 @@
                     <span id="dateDate">{{dateActif}}</span>
                 </div>
                 <div id="weather" class="col-md-6 col-sm-6 col-xs-6 right">
-                    <img id="iconDay" src="images/icons/{{iconDayActif}}.png" />
+                    <img id="iconDay" alt="Temps" src="images/icons/{{iconDayActif}}.png" />
                 </div>
             </div>
             <div id="temperature">{{temperatureDay}}<span class="degree">°</span></div>
-            <span id="humPress">Humidit&eacute; : {{humidityDay}} % - Pression : {{pressureDay}} hpa</span>
+            <span id="humPress">Humidit&eacute; : {{humidityDay}} % - Pression : {{pressureDay}} hpa<br />Vitesse du vent : {{speedDay}} km/h</span>
         </div>
     </div>
-    <div id="otherDays" class="col-md-12">
+    <div id="otherDays" class="container">
         <ul>
-            <li ng-repeat="day in days">
-                <span>{{day.day}}</span>
-                <span>{{day.date}}</span>
-                <span>{{day.temp}}°</span>
+            <li ng-repeat="day in days" class="inline">
+                <div class="col-md-6 col-sm-6 col-xs-6 dates">
+                    <span class="otherDay inline">{{day.day}}</span>
+                    <span class="otherDate inline">{{day.date}}</span>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 temps">
+                    <img class="iconOtherDays" alt="Temps" src="images/icons/small/{{day.icon}}.png" />
+                    <span class="tempOtherDay">{{day.temp}}°</span>
+                </div>
             </li>
         </ul>
     </div>
