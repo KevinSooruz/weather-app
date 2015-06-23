@@ -56,6 +56,7 @@ app.controller("homeCtrl", function($scope, $http){
     };
     
     // Fonction de requête de la météo
+    var numbersDaySup; // Initialiastion du nombre de jours supérieurs au max du mois
     var api = function(url, typeDay){
         
         $http({
@@ -86,15 +87,33 @@ app.controller("homeCtrl", function($scope, $http){
                     $scope.cityCountry = response.list[0].sys.country;
                     $scope.temperatureDay = (response.list[0].main.temp).toFixed(0);
                     $scope.iconDayActif = response.list[0].weather[0].icon;
-                    $scope.dayActif = day();
-                    $scope.dateActif = date();
+                    $scope.dayActif = day(today.getDay());
+                    $scope.dateActif = date(today.getDate(), today.getMonth(), today.getFullYear());
                     $scope.humidityDay = (response.list[0].main.humidity).toFixed(0);
                     $scope.pressureDay = (response.list[0].main.pressure).toFixed(0);
                     
                 }else if(typeDay === "otherDays"){
                     
                     // Envoi des données de la réponse au front
-                    $scope.days = response.list;
+                    numbersDaySup = 0; // Initialiastion du nombre de jours supérieurs au max du mois
+                    var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
+                    var maxDays = response.list.length;
+                    
+                    // Boucle des infos (création d'objets) à envoyer au tableau pour le front
+                    var i = 0;
+                    for(; i < maxDays; i++){
+                        
+                        daysInfo.push({
+                        
+                            day: findNextDay(i),
+                            date: findNextDate(i),
+                            temp: response.list[i].temp.day.toFixed(0)
+
+                        });
+                        
+                    }
+                    
+                    $scope.days = daysInfo;
                     
                 }
                 
@@ -115,11 +134,12 @@ app.controller("homeCtrl", function($scope, $http){
             
         });
         
-    }
+    };
     
     // Date
-    var today = new Date();
-    var days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    var today = new Date(); // Date actuelle
+    var days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]; // Tableau des jours de la semaine
+    // tableau des mois de l'année et nombre de jours max dans le mois
     var months = [
         {
             name: "Janvier",
@@ -171,15 +191,63 @@ app.controller("homeCtrl", function($scope, $http){
         }
     ];
     
-    var day = function(){
+    // Fonction permettant de retourner le jour de la semaine
+    var day = function(number){
         
-        return days[today.getDay()];
+        return days[number];
         
     };
     
-    var date = function(){
+    // Fonction permettant de retourner la date de type dd/mm/yy
+    var date = function(numDay, numMonth, numYear){
         
-        return today.getDate() + " " + months[today.getMonth()].name + " " + today.getFullYear();
+        return numDay + " " + months[numMonth].name + " " + numYear;
+        
+    };
+    
+    // Fonction permettant de trouver les jours de la semaine en cours
+    var findNextDay = function(number){
+    
+        var startDay = today.getDay();
+        var newDay = (startDay + number) + 1; // jour actuel + i + 1 (car semaine commence à 0)
+
+        // Si on est supérieur au 6ème jour (samedi), retour en début de tableau (dimanche)
+        if(newDay > 6){
+
+            newDay = number - 4;
+
+        }
+        
+        return day(newDay);
+        
+    };
+    
+    // Fonction permettant de retourner les dates des jours de la semaine en cours
+    var findNextDate = function(number){
+        
+        var startDate = today.getDate();
+        var newDate = (startDate + number) + 1; // +1 car boucle commence à 0
+        
+        var newMonth = today.getMonth();
+        var limite = months[newMonth].limite;
+        
+        var newYear = today.getFullYear();
+        
+        if(newDate > limite){
+            
+            numbersDaySup++; // Incrémentation du nombre de jours supérieurs au max du mois
+            newDate = numbersDaySup;
+            
+            if(newMonth === 11){
+            
+                newMonth = 0; // Incrémentation du mois si fin de mois
+                newYear = newYear + 1; // Incrémentation de l'année si fin année
+            
+            }
+            
+        }
+        
+        return date(newDate, newMonth, newYear);
         
     };
     

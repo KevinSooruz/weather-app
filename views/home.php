@@ -45,7 +45,9 @@
     <div id="otherDays" class="col-md-12">
         <ul>
             <li ng-repeat="day in days">
-                <span>{{day.temp.day.toFixed(0)}}°</span>
+                <span>{{day.day}}</span>
+                <span>{{day.date}}</span>
+                <span>{{day.temp}}°</span>
             </li>
         </ul>
     </div>
