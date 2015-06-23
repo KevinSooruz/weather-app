@@ -38,13 +38,15 @@
                     <img id="iconDay" src="images/icons/{{iconDayActif}}.png" />
                 </div>
             </div>
-            <div id="temperature">{{temperatureDay}}°C</div>
+            <div id="temperature">{{temperatureDay}}<span class="degree">°</span></div>
             <span id="humPress">Humidit&eacute; : {{humidityDay}} % - Pression : {{pressureDay}} hpa</span>
         </div>
     </div>
     <div id="otherDays" class="col-md-12">
         <ul>
-            <li ng-repeat="day in days"></li>
+            <li ng-repeat="day in days">
+                <span>{{day.temp.day.toFixed(0)}}°</span>
+            </li>
         </ul>
     </div>
 </div>
