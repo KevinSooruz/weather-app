@@ -45,13 +45,24 @@
     <div id="otherDays" class="container">
         <ul>
             <li ng-repeat="day in days" class="inline">
-                <div class="col-md-6 col-sm-6 col-xs-6 dates">
-                    <span class="otherDay inline">{{day.day}}</span>
-                    <span class="otherDate inline">{{day.date}}</span>
+                <div class="inline">
+                    <div class="col-md-6 col-sm-6 col-xs-6 dates">
+                        <span class="otherDay inline">{{day.day}}</span>
+                        <span class="otherDate inline">{{day.date}}</span>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 temps">
+                        <img class="iconOtherDays" alt="Temps" src="images/icons/small/{{day.icon}}.png" />
+                        <span class="tempOtherDay">{{day.temp}}°</span>
+                    </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-6 temps">
-                    <img class="iconOtherDays" alt="Temps" src="images/icons/small/{{day.icon}}.png" />
-                    <span class="tempOtherDay">{{day.temp}}°</span>
+                <div class="inline otherInfos small">
+                    <div class="col-md-6 col-sm-8 col-xs-8 left">
+                        <span class="inline humPressOtherDays">Humidit&eacute; : {{day.humidityOtherDay}} %<br />Pression : {{day.pressureOtherDay}} hpa<br />Vent : {{day.speedOtherDay}} km/h<br />
+                        {{day.rain}}</span>
+                    </div>
+                    <div class="col-md-6 col-sm-4 col-xs-4 right">
+                        <span class="inline minTemp">min : {{day.minTemp}}°</span>
+                    </div>
                 </div>
             </li>
         </ul>

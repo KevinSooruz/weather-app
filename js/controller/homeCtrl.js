@@ -104,12 +104,24 @@ app.controller("homeCtrl", function($scope, $http){
                     var i = 0;
                     for(; i < maxDays; i++){
                         
+                        var rainResponse;
+                        if(response.list[i].rain){
+                            
+                            rainResponse = "Précipitations : " +  response.list[i].rain + " mm";
+                            
+                        }
+                        
                         daysInfo.push({
                         
                             day: findNextDay(i),
                             date: findNextDate(i),
-                            temp: response.list[i].temp.day.toFixed(0),
-                            icon: response.list[i].weather[0].icon
+                            temp: response.list[i].temp.max.toFixed(0),
+                            minTemp: response.list[i].temp.min.toFixed(0),
+                            icon: response.list[i].weather[0].icon,
+                            humidityOtherDay: response.list[i].humidity.toFixed(0),
+                            pressureOtherDay: response.list[i].pressure.toFixed(0),
+                            speedOtherDay : windSpeed(response.list[i].speed).toFixed(0),
+                            rain: rainResponse
 
                         });
                         
@@ -125,12 +137,13 @@ app.controller("homeCtrl", function($scope, $http){
                 
             }
             
-        }).error(function(headers, status, config){
+        }).error(function(headers, status, config, error){
             
             // Fin du loader
             $scope.goSearch = false;
             
             console.log(headers);
+            console.log(error);
             console.log(status);
             console.log(config);
             
