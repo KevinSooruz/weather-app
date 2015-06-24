@@ -1,5 +1,5 @@
 <!--First block-->
-<div id="block1" class="block">
+<div id="block1" class="block" ng-class="{hideResponse: result === true, show: result === false}">
     <header></header>
     <div class="content container">
         <p>Recherchez une ville pour afficher la m&eacute;t&eacute;o</p>

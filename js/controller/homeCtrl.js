@@ -1,5 +1,5 @@
 // Home controller
-app.controller("homeCtrl", function($scope, $http){
+app.controller("homeCtrl", function($scope, $http, WindSpeed){
     
     // today
     // http://api.openweathermap.org/data/2.5/find?q=bordeaux&units=metric&lang=fr&type=accurate
@@ -91,7 +91,7 @@ app.controller("homeCtrl", function($scope, $http){
                     $scope.dateActif = date(today.getDate(), today.getMonth(), today.getFullYear());
                     $scope.humidityDay = response.list[0].main.humidity.toFixed(0);
                     $scope.pressureDay = response.list[0].main.pressure.toFixed(0);
-                    $scope.speedDay = windSpeed(response.list[0].wind.speed).toFixed(0);
+                    $scope.speedDay = WindSpeed.km(response.list[0].wind.speed).toFixed(0);
                     
                 }else if(typeDay === "otherDays"){
                     
@@ -120,7 +120,7 @@ app.controller("homeCtrl", function($scope, $http){
                             icon: response.list[i].weather[0].icon,
                             humidityOtherDay: response.list[i].humidity.toFixed(0),
                             pressureOtherDay: response.list[i].pressure.toFixed(0),
-                            speedOtherDay : windSpeed(response.list[i].speed).toFixed(0),
+                            speedOtherDay : WindSpeed.km(response.list[i].speed).toFixed(0),
                             rain: rainResponse
 
                         });
@@ -229,7 +229,7 @@ app.controller("homeCtrl", function($scope, $http){
         // Si on est supérieur au 6ème jour (samedi), retour en début de tableau (dimanche)
         if(newDay > 6){
 
-            newDay = number - 4;
+            newDay = number - 3;
 
         }
         
@@ -252,6 +252,7 @@ app.controller("homeCtrl", function($scope, $http){
             
             numbersDaySup++; // Incrémentation du nombre de jours supérieurs au max du mois
             newDate = numbersDaySup;
+            newMonth = newMonth + 1;
             
             if(newMonth === 11){
             
@@ -263,14 +264,6 @@ app.controller("homeCtrl", function($scope, $http){
         }
         
         return date(newDate, newMonth, newYear);
-        
-    };
-    
-    // Fonction de calcul de la vitesse du vent (1 m/s = 3.6 km/h)
-    var windSpeed = function(speed){
-        
-        var speedKm = speed * 3.6;
-        return speedKm;
         
     };
     

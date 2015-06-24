@@ -1,5 +1,5 @@
 // Initialisation
-var app = angular.module("app", ["ngRoute", "ngTouch"]);
+var app = angular.module("app", ["ngRoute", "ngTouch", "services"]);
 
 // Gestion des routes
 app.config(["$routeProvider", function($routeProvider){
