@@ -1,5 +1,5 @@
 // Home controller
-app.controller("homeCtrl", function($scope, $http, WindSpeed){
+app.controller("homeCtrl", function($scope, $http, WindSpeed, Api){
     
     // today
     // http://api.openweathermap.org/data/2.5/find?q=bordeaux&units=metric&lang=fr&type=accurate
@@ -23,6 +23,9 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed){
         
     };
     
+    // Initialiastion du nombre de jours supérieurs au max du mois
+    var numbersDaySup;
+    
     // Fonction recherche ville
     $scope.search = function(city){
         
@@ -36,100 +39,28 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed){
         $scope.goSearch = true;
         
         // Lancement de la recherche pour le jour en cours = requête api
-        var dayInfos = function(){
-            
-            var url = "http://api.openweathermap.org/data/2.5/find?q=" + city + "&mode=json&units=metric&lang=fr&type=accurate";
-            api(url, "currentDay");
-            
-        };
-        dayInfos();
-        
-        // Lancement de la recherche pour les heures et 4 prochains jours = requête api
-        var dayInfos = function(){
-            
-            var url = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=10&lang=fr&type=accurate";
-            api(url, "otherDays");
-            
-        };
-        dayInfos();
-        
-    };
-    
-    // Fonction de requête de la météo
-    var numbersDaySup; // Initialiastion du nombre de jours supérieurs au max du mois
-    var api = function(url, typeDay){
-        
-        $http({
-           
-            method: "GET",
-            url: url
-            
-        }).success(function(response){
-            
-            // Fin du loader
-            $scope.goSearch = false;
+        Api.get("http://api.openweathermap.org/data/2.5/find?q=" + city + "&mode=json&units=metric&lang=fr&type=accurate").then(function(response){
             
             console.log(response);
             console.log(response.cod);
             
-            // Requête retourne automatiquement une réponse. Si vide/mauvaise code réponse === 404
-            // Si code réponse !== 404 --> suite
+            // Fin du loader
+            $scope.goSearch = false;
+            
             if(response.cod !== "404"){
                 
                 // Modification de l'état de la requête
                 $scope.result = true;
                 
-                // Si requête jour actuel / Si requête prochains jours
-                if(typeDay === "currentDay"){
-                    
-                    // Initialisation des éléments du jour actuel
-                    $scope.cityDay = response.list[0].name;
-                    $scope.cityCountry = response.list[0].sys.country;
-                    $scope.temperatureDay = (response.list[0].main.temp).toFixed(0);
-                    $scope.iconDayActif = response.list[0].weather[0].icon;
-                    $scope.dayActif = day(today.getDay());
-                    $scope.dateActif = date(today.getDate(), today.getMonth(), today.getFullYear());
-                    $scope.humidityDay = response.list[0].main.humidity.toFixed(0);
-                    $scope.pressureDay = response.list[0].main.pressure.toFixed(0);
-                    $scope.speedDay = WindSpeed.km(response.list[0].wind.speed).toFixed(0);
-                    
-                }else if(typeDay === "otherDays"){
-                    
-                    // Envoi des données de la réponse au front
-                    numbersDaySup = 0; // Initialiastion du nombre de jours supérieurs au max du mois
-                    var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
-                    var maxDays = response.list.length;
-                    
-                    // Boucle des infos (création d'objets) à envoyer au tableau pour le front
-                    var i = 0;
-                    for(; i < maxDays; i++){
-                        
-                        var rainResponse;
-                        if(response.list[i].rain){
-                            
-                            rainResponse = "Précipitations : " +  response.list[i].rain + " mm";
-                            
-                        }
-                        
-                        daysInfo.push({
-                        
-                            day: findNextDay(i),
-                            date: findNextDate(i),
-                            temp: response.list[i].temp.max.toFixed(0),
-                            minTemp: response.list[i].temp.min.toFixed(0),
-                            icon: response.list[i].weather[0].icon,
-                            humidityOtherDay: response.list[i].humidity.toFixed(0),
-                            pressureOtherDay: response.list[i].pressure.toFixed(0),
-                            speedOtherDay : WindSpeed.km(response.list[i].speed).toFixed(0),
-                            rain: rainResponse
-
-                        });
-                        
-                    }
-                    
-                    $scope.days = daysInfo;
-                    
-                }
+                $scope.cityDay = response.list[0].name;
+                $scope.cityCountry = response.list[0].sys.country;
+                $scope.temperatureDay = (response.list[0].main.temp).toFixed(0);
+                $scope.iconDayActif = response.list[0].weather[0].icon;
+                $scope.dayActif = day(today.getDay());
+                $scope.dateActif = date(today.getDate(), today.getMonth(), today.getFullYear());
+                $scope.humidityDay = response.list[0].main.humidity.toFixed(0);
+                $scope.pressureDay = response.list[0].main.pressure.toFixed(0);
+                $scope.speedDay = WindSpeed.km(response.list[0].wind.speed).toFixed(0);
                 
             }else{
                 
@@ -137,15 +68,55 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed){
                 
             }
             
-        }).error(function(headers, status, config, error){
+        });
+        
+        // Lancement de la recherche pour les prochains jours = requête api
+        Api.get("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=10&lang=fr&type=accurate").then(function(response){
             
-            // Fin du loader
-            $scope.goSearch = false;
+            console.log(response);
+            console.log(response.cod);
             
-            console.log(headers);
-            console.log(error);
-            console.log(status);
-            console.log(config);
+            if(response.cod !== "404"){
+                
+                // Envoi des données de la réponse au front
+                numbersDaySup = 0; // Initialiastion du nombre de jours supérieurs au max du mois
+                var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
+                var maxDays = response.list.length;
+
+                // Boucle des infos (création d'objets) à envoyer au tableau pour le front
+                var i = 0;
+                for(; i < maxDays; i++){
+
+                    var rainResponse;
+                    if(response.list[i].rain){
+
+                        rainResponse = "Précipitations : " +  response.list[i].rain + " mm";
+
+                    }
+
+                    daysInfo.push({
+
+                        day: findNextDay(i),
+                        date: findNextDate(i),
+                        temp: response.list[i].temp.max.toFixed(0),
+                        minTemp: response.list[i].temp.min.toFixed(0),
+                        icon: response.list[i].weather[0].icon,
+                        humidityOtherDay: response.list[i].humidity.toFixed(0),
+                        pressureOtherDay: response.list[i].pressure.toFixed(0),
+                        speedOtherDay : WindSpeed.km(response.list[i].speed).toFixed(0),
+                        rain: rainResponse
+
+                    });
+
+                }
+
+                $scope.days = daysInfo;
+                
+            }else{
+                
+                return;
+                
+            }
             
         });
         

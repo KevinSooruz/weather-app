@@ -1,6 +1,4 @@
-var windSpeedService = angular.module("services", []);
-
-windSpeedService.factory("WindSpeed", function(){
+services.factory("WindSpeed", function(){
     
     var windSpeed = {};
     

@@ -23,8 +23,8 @@ module.exports = function(grunt) {
         },
         target: {
             files: {
-                "js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js", "js/service/windSpeed.js"],
-                "dist/js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js", "js/service/windSpeed.js"]
+                "js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js", "js/service/windSpeed.js", "js/service/api.js"],
+                "dist/js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js", "js/service/windSpeed.js" , "js/service/api.js"]
             }
         }
     },
