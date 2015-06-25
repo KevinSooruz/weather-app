@@ -87,7 +87,7 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
                 
                 // Envoi des données de la réponse au front
                 // Jour actuel
-                $scope.cityDay = response.city.name;
+                $scope.cityName = response.city.name;
                 $scope.cityCountry = response.city.country;
                 $scope.temperatureDay = (response.list[0].temp.day).toFixed(0);
                 $scope.iconDayActif = response.list[0].weather[0].icon;
@@ -99,7 +99,11 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
                 
                 if(response.list[0].rain){
                     
-                    $scope.rain = "Précipitations : " + response.list[0].rain + " mm";
+                    $scope.rain = "- Précipitations : " + response.list[0].rain + " mm";
+                    
+                }else{
+                    
+                    $scope.rain = "";
                     
                 }
                 
@@ -151,6 +155,23 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
             $scope.goSearch = false;
     
         });
+        
+    };
+    
+    // Initialisation du stock
+    var maxStock = localStorage.length;
+    //localStorage.clear();
+    var i = 1;
+    for(; i <= maxStock; i++){
+        
+        console.log(localStorage.getItem("city" + i));
+        
+    }
+    
+    $scope.addCity = function(name, country){
+        
+        maxStock++;
+        localStorage.setItem("city" + maxStock, name + "," + country);
         
     };
     

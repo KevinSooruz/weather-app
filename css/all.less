@@ -22,10 +22,11 @@
 //////////////////// CSS Spec ////////////////////
 @tp: transparent;
 @white: #fff;
-@blueBg: rgba(67, 62, 128, 0.5);
+@blueBg: rgba(67, 62, 128, 0.6);
 @textHard: #222;
 @text: #929294;
 @extraLight: #eee;
+@materialColor: #ff3166;
 
 @heightHeader: 110px;
 
@@ -63,6 +64,10 @@
     -ms-border-radius: @radius;
     -o-border-radius: @radius;
     border-radius: @radius;
+}
+
+.filterBlue{
+    .bgCol(@blueBg);
 }
 
 //////////////////// CSS Général ////////////////////
@@ -103,6 +108,19 @@ body{
             padding: 10px 45px;
         }
         
+        .btnMaterial{
+            .bgCol(@materialColor);
+            color: @white;
+            .f300;
+            text-transform: none;
+            .box-shadow(@shadow: 0 1px 5px rgba(0,0,0,0.5));
+            height: 40px; width: 40px;
+            padding: 0;
+            .border-radius(50px);
+            z-index: 10;
+            display: block;
+        }
+        
         .none{
             display: none;
         }
@@ -110,10 +128,6 @@ body{
         .filter{
             .absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-        }
-        
-        .filterBlue{
-            .bgCol(@blueBg);
         }
         
         .inline{

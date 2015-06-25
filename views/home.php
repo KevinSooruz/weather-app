@@ -1,5 +1,6 @@
 <!--First block-->
 <div id="block1" class="block" ng-class="{hideResponse: result === true, show: result === false}" ng-swipe-left="showResultSwipe()">
+    <button class="btn btnMaterial"><i class="glyphicon glyphicon-option-vertical"></i></button>
     <header></header>
     <div class="content container">
         <p>Recherchez une ville pour afficher la m&eacute;t&eacute;o</p>
@@ -27,8 +28,8 @@
         <div class="filter filterBlue">
             <div class="container">
                 <div id="city">
-                    <i class="glyphicon glyphicon-chevron-left" ng-click="hideResult()"></i>
-                    <span>{{cityDay}}<br /><span class="country">{{cityCountry}}</span></span>
+                    <i class="glyphicon glyphicon-menu-left" ng-click="hideResult()"></i>
+                    <span>{{cityName}}<br /><span class="country">{{cityCountry}}</span></span>
                 </div>
                 <div class="inline">
                     <div id="date" class="col-md-6 col-sm-6 col-xs-6 left">
@@ -40,11 +41,12 @@
                     </div>
                 </div>
                 <div id="temperature">{{temperatureDay}}<span class="degree">°</span></div>
-                <span id="humPress">Humidit&eacute; : {{humidityDay}} % - Pression : {{pressureDay}} hpa<br />Vitesse du vent : {{speedDay}} km/h - {{rain}}</span>
+                <span id="humPress">Humidit&eacute; : {{humidityDay}} % - Pression : {{pressureDay}} hpa<br />Vitesse du vent : {{speedDay}} km/h {{rain}}</span>
             </div>
         </div>
     </div>
     <div id="otherDays" class="container">
+        <button class="btn btnMaterial" ng-click="addCity(cityName, cityCountry)">+</button>
         <ul>
             <li ng-repeat="day in days" class="inline">
                 <div class="inline">
