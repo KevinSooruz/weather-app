@@ -1,5 +1,5 @@
 <!--First block-->
-<div id="block1" class="block" ng-class="{hideResponse: result === true, show: result === false}">
+<div id="block1" class="block" ng-class="{hideResponse: result === true, show: result === false}" ng-swipe-left="showResultSwipe()">
     <header></header>
     <div class="content container">
         <p>Recherchez une ville pour afficher la m&eacute;t&eacute;o</p>
@@ -22,7 +22,7 @@
 </div>
 
 <!--Second block-->
-<div id="block2" class="block" ng-class="{show: result === true, hideResponse: result === false}">
+<div id="block2" class="block" ng-class="{show: result === true, hideResponse: result === false}" ng-swipe-right="hideResultSwipe()">
     <div id="weatherDay">
         <div class="filter filterBlue">
             <div class="container">

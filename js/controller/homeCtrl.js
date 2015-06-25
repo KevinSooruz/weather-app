@@ -1,5 +1,5 @@
 // Home controller
-app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate){
+app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random, Win){
     
     // today
     // http://api.openweathermap.org/data/2.5/find?q=bordeaux&units=metric&lang=fr&type=accurate
@@ -16,6 +16,10 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate){
     // Initialisation de la réponse de la requête
     $scope.result = false;
     
+    // Initialisation des résultast pour le swipe
+    var results;
+    results = false;
+    
     // Retour accueil
     $scope.hideResult = function(){
         
@@ -23,8 +27,36 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate){
         
     };
     
+    $scope.hideResultSwipe = function(){
+        
+        if(Win.width() < 771){
+            
+            $scope.result = false;
+            
+        }
+        
+    };
+    
+    $scope.showResultSwipe = function(){
+        
+        if(Win.width() < 771){
+            
+            // Si on a un résultat possibilité de retour
+            if(results === true){
+            
+                $scope.result = true;
+
+            }
+            
+        }
+        
+    };
+    
     // Fonction recherche ville
     $scope.search = function(city){
+        
+        // Random background
+        Random.run("weatherDay");
         
         if($scope.searchCity.city.$error.minlength === true || city === undefined || city === ""){
             
@@ -51,6 +83,7 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate){
                 
                 // Modification de l'état de la requête
                 $scope.result = true;
+                results = true;
                 
                 // Envoi des données de la réponse au front
                 // Jour actuel
