@@ -1,5 +1,5 @@
 // Home controller
-app.controller("homeCtrl", function($scope, $http, WindSpeed, Api){
+app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate){
     
     // today
     // http://api.openweathermap.org/data/2.5/find?q=bordeaux&units=metric&lang=fr&type=accurate
@@ -23,9 +23,6 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api){
         
     };
     
-    // Initialiastion du nombre de jours supérieurs au max du mois
-    var numbersDaySup;
-    
     // Fonction recherche ville
     $scope.search = function(city){
         
@@ -38,8 +35,11 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api){
         // Lancement du loader
         $scope.goSearch = true;
         
-        // Lancement de la recherche pour le jour en cours = requête api
-        Api.get("http://api.openweathermap.org/data/2.5/find?q=" + city + "&mode=json&units=metric&lang=fr&type=accurate").then(function(response){
+        // Nombre de jours souhaités dans la recherche
+        var maxDays = 10;
+        
+        // Lancement de la recherche pour le jour en cours et les jours suivants = requête api
+        Api.get("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=" + maxDays + "&lang=fr&type=accurate").then(function(response){
             
             console.log(response);
             console.log(response.cod);
@@ -52,39 +52,29 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api){
                 // Modification de l'état de la requête
                 $scope.result = true;
                 
-                $scope.cityDay = response.list[0].name;
-                $scope.cityCountry = response.list[0].sys.country;
-                $scope.temperatureDay = (response.list[0].main.temp).toFixed(0);
-                $scope.iconDayActif = response.list[0].weather[0].icon;
-                $scope.dayActif = day(today.getDay());
-                $scope.dateActif = date(today.getDate(), today.getMonth(), today.getFullYear());
-                $scope.humidityDay = response.list[0].main.humidity.toFixed(0);
-                $scope.pressureDay = response.list[0].main.pressure.toFixed(0);
-                $scope.speedDay = WindSpeed.km(response.list[0].wind.speed).toFixed(0);
-                
-            }else{
-                
-                return;
-                
-            }
-            
-        });
-        
-        // Lancement de la recherche pour les prochains jours = requête api
-        Api.get("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=10&lang=fr&type=accurate").then(function(response){
-            
-            console.log(response);
-            console.log(response.cod);
-            
-            if(response.cod !== "404"){
-                
                 // Envoi des données de la réponse au front
-                numbersDaySup = 0; // Initialiastion du nombre de jours supérieurs au max du mois
+                // Jour actuel
+                $scope.cityDay = response.city.name;
+                $scope.cityCountry = response.city.country;
+                $scope.temperatureDay = (response.list[0].temp.day).toFixed(0);
+                $scope.iconDayActif = response.list[0].weather[0].icon;
+                $scope.dayActif = Ndate.day(response.list[0].dt);
+                $scope.dateActif = Ndate.fullDate(response.list[0].dt);
+                $scope.humidityDay = response.list[0].humidity.toFixed(0);
+                $scope.pressureDay = response.list[0].pressure.toFixed(0);
+                $scope.speedDay = WindSpeed.km(response.list[0].speed).toFixed(0);
+                
+                if(response.list[0].rain){
+                    
+                    $scope.rain = "Précipitations : " + response.list[0].rain + " mm";
+                    
+                }
+                
+                // Autres jours
                 var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
-                var maxDays = response.list.length;
-
+                
                 // Boucle des infos (création d'objets) à envoyer au tableau pour le front
-                var i = 0;
+                var i = 1; // 1 car 0 = jour actuel
                 for(; i < maxDays; i++){
 
                     var rainResponse;
@@ -96,20 +86,20 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api){
 
                     daysInfo.push({
 
-                        day: findNextDay(i),
-                        date: findNextDate(i),
+                        day: Ndate.day(response.list[i].dt),
+                        date: Ndate.fullDate(response.list[i].dt),
                         temp: response.list[i].temp.max.toFixed(0),
                         minTemp: response.list[i].temp.min.toFixed(0),
                         icon: response.list[i].weather[0].icon,
                         humidityOtherDay: response.list[i].humidity.toFixed(0),
                         pressureOtherDay: response.list[i].pressure.toFixed(0),
                         speedOtherDay : WindSpeed.km(response.list[i].speed).toFixed(0),
-                        rain: rainResponse
+                        rainOtherDay: rainResponse
 
                     });
 
                 }
-
+                
                 $scope.days = daysInfo;
                 
             }else{
@@ -119,122 +109,6 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api){
             }
             
         });
-        
-    };
-    
-    // Date
-    var today = new Date(); // Date actuelle
-    var days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]; // Tableau des jours de la semaine
-    // tableau des mois de l'année et nombre de jours max dans le mois
-    var months = [
-        {
-            name: "Janvier",
-            limite: 31
-        }, 
-        {
-            name: "Février",
-            limite: 30
-        }, 
-        {
-            name: "Mars",
-            limite: 31
-        }, 
-        {
-            name: "Avril",
-            limite: 30
-        }, 
-        {
-            name: "Mai",
-            limite: 31
-        }, 
-        {
-            name: "Juin",
-            limite: 30
-        },
-        {
-            name: "Juillet",
-            limite: 31
-        }, 
-        {
-            name: "Août",
-            limite: 31
-        }, 
-        {
-            name: "Septembre",
-            limite: 30
-        }, 
-        {
-            name: "Octobre",
-            limite: 31
-        }, 
-        {
-            name: "Novembre",
-            limite: 30
-        }, 
-        {
-            name: "Décembre",
-            limite: 31
-        }
-    ];
-    
-    // Fonction permettant de retourner le jour de la semaine
-    var day = function(number){
-        
-        return days[number];
-        
-    };
-    
-    // Fonction permettant de retourner la date de type dd/mm/yy
-    var date = function(numDay, numMonth, numYear){
-        
-        return numDay + " " + months[numMonth].name + " " + numYear;
-        
-    };
-    
-    // Fonction permettant de trouver les jours de la semaine en cours
-    var findNextDay = function(number){
-    
-        var startDay = today.getDay();
-        var newDay = (startDay + number) + 1; // jour actuel + i + 1 (car semaine commence à 0)
-
-        // Si on est supérieur au 6ème jour (samedi), retour en début de tableau (dimanche)
-        if(newDay > 6){
-
-            newDay = number - 3;
-
-        }
-        
-        return day(newDay);
-        
-    };
-    
-    // Fonction permettant de retourner les dates des jours de la semaine en cours
-    var findNextDate = function(number){
-        
-        var startDate = today.getDate();
-        var newDate = (startDate + number) + 1; // +1 car boucle commence à 0
-        
-        var newMonth = today.getMonth();
-        var limite = months[newMonth].limite;
-        
-        var newYear = today.getFullYear();
-        
-        if(newDate > limite){
-            
-            numbersDaySup++; // Incrémentation du nombre de jours supérieurs au max du mois
-            newDate = numbersDaySup;
-            newMonth = newMonth + 1;
-            
-            if(newMonth === 11){
-            
-                newMonth = 0; // Incrémentation du mois si fin de mois
-                newYear = newYear + 1; // Incrémentation de l'année si fin année
-            
-            }
-            
-        }
-        
-        return date(newDate, newMonth, newYear);
         
     };
     
