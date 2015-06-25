@@ -4,7 +4,6 @@ services.factory("Random", function(){
     
     random.run = function(elem){
         
-        console.log(elem);
         var nb = Math.floor((Math.random() * 16) + 1);
         var elem = document.getElementById(elem);
         

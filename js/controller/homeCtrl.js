@@ -141,6 +141,15 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
                 
             }
             
+        }).catch(function(error, data, status, config){
+            
+            console.error(error, data, status, config);
+            
+        }).finally(function(){
+            
+            // Fin du loader
+            $scope.goSearch = false;
+    
         });
         
     };
