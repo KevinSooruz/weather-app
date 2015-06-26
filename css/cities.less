@@ -1,0 +1,16 @@
+#all{
+    #block3{
+        .translate3d(100%; 0; 0);
+        .bgCol(@white);
+        
+        &.showCities{
+            .translate3d(0; 0; 0);
+            .transition-duration(600ms);
+        }
+        
+        &.hideCities{
+            .translate3d(100%; 0; 0);
+            .transition-duration(600ms);
+        }
+    }
+}

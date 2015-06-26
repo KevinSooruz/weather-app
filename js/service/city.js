@@ -4,9 +4,6 @@ services.factory("City", function(){
     
     city.add = function(name, country){
         
-        // Initialisation du nom et pays (pour recherche plus précise) de la ville
-        var cityName = name + "," + country;
-        
         // Si le stockage local "cities" existe
         if(localStorage.getItem("cities")){
             
@@ -20,7 +17,8 @@ services.factory("City", function(){
                 // Récupération et envoi des anciennes données au nouveau tableau de données sinon écrasement des données
                 city.push({
                    
-                    name: citiesStock[i].name
+                    name: citiesStock[i].name,
+                    country: citiesStock[i].country
                     
                 });
                 
@@ -29,7 +27,8 @@ services.factory("City", function(){
             // Ajout de la nouvelle donnée au tableau
             city.push({
                 
-                name: cityName
+                name: name,
+                country: country
                 
             });
             
@@ -46,7 +45,8 @@ services.factory("City", function(){
             var city = [
                 
                 {
-                    name: cityName
+                    name: name,
+                    country: country
                 }
                 
             ];
@@ -58,6 +58,12 @@ services.factory("City", function(){
             localStorage.setItem("cities", cities);
             
         }
+        
+    };
+    
+    city.clear = function(){
+        
+        localStorage.removeItem("cities");
         
     };
     

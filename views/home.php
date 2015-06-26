@@ -1,6 +1,6 @@
 <!--First block-->
-<div id="block1" class="block" ng-class="{hideResponse: result === true, show: result === false}" ng-swipe-left="showResultSwipe()">
-    <button class="btn btnMaterial"><i class="glyphicon glyphicon-option-vertical"></i></button>
+<div id="block1" class="block" ng-class="{hideResponse: result === true || viewCities === true, show: result === false || viewCities === false}" ng-swipe-left="showResultSwipe()">
+    <button class="btn btnMaterial" ng-class="{none: cities === false}" ng-click="viewCity()"><i class="glyphicon glyphicon-option-vertical"></i></button>
     <header></header>
     <div class="content container">
         <p>Recherchez une ville pour afficher la m&eacute;t&eacute;o</p>
@@ -70,4 +70,8 @@
             </li>
         </ul>
     </div>
+</div>
+
+<div id="block3" class="block" ng-class="{hideCities: viewCities === false, showCities: viewCities === true}" ng-swipe-left="">
+    
 </div>

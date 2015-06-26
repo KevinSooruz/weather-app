@@ -16,7 +16,21 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
     // Initialisation de la réponse de la requête
     $scope.result = false;
     
-    // Initialisation des résultast pour le swipe
+    // Initialisation de l'affichage des villes sauvegardées
+    $scope.viewCities = false;
+    
+    // Initialisation du bouton d'accès aux villes sauvegardées
+    if(localStorage.getItem("cities")){
+        
+        $scope.cities = true;
+        
+    }else{
+        
+        $scope.cities = false;
+        
+    }
+    
+    // Initialisation des résultats pour le swipe
     var results;
     results = false;
     
@@ -51,6 +65,13 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
             }
             
         }
+        
+    };
+    
+    // Fonction d'accès aux villes sauvegardées
+    $scope.viewCity = function(){
+        
+        $scope.viewCities = true;
         
     };
     
@@ -165,6 +186,9 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
     $scope.addCity = function(name, country){
         
         City.add(name, country);
+        
+        // Ajout du bouton d'accès aux villes sauvegardées
+        $scope.cities = true;
         
     };
     
