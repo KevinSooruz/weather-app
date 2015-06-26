@@ -1,5 +1,5 @@
 // Home controller
-app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random, Win){
+app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random, Win, City){
     
     // today
     // http://api.openweathermap.org/data/2.5/find?q=bordeaux&units=metric&lang=fr&type=accurate
@@ -27,6 +27,7 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
         
     };
     
+    // Swipe right sur mobile pour revenir à l'accueil
     $scope.hideResultSwipe = function(){
         
         if(Win.width() < 771){
@@ -37,6 +38,7 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
         
     };
     
+    // Swipe left sur mobile revenir sur la page des résultats
     $scope.showResultSwipe = function(){
         
         if(Win.width() < 771){
@@ -137,6 +139,7 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
 
                 }
                 
+                // tabeau des résultats envoyé au front
                 $scope.days = daysInfo;
                 
             }else{
@@ -158,20 +161,10 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
         
     };
     
-    // Initialisation du stock
-    var maxStock = localStorage.length;
-    //localStorage.clear();
-    var i = 1;
-    for(; i <= maxStock; i++){
-        
-        console.log(localStorage.getItem("city" + i));
-        
-    }
-    
+    // Ajout de données au stockage local
     $scope.addCity = function(name, country){
         
-        maxStock++;
-        localStorage.setItem("city" + maxStock, name + "," + country);
+        City.add(name, country);
         
     };
     
