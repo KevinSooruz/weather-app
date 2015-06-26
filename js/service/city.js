@@ -61,6 +61,32 @@ services.factory("City", function(){
         
     };
     
+    city.verification = function(name, country){
+        
+        if(localStorage.getItem("cities")){
+            
+            var citiesStock = JSON.parse(localStorage.getItem("cities")); // Récupération des données locales pour "cities"
+            var citiesMax = citiesStock.length; // Nombre max de données stockées dans "cities"
+
+            var i = 0;
+            for(; i < citiesMax; i++){
+
+                // Lancement de la vérification si ville existe déjà
+                var verifName = citiesStock[i].name + "," + citiesStock[i].country;
+                var cityName = name + "," + country;
+
+                if(cityName === verifName){
+
+                    return "City Exist";
+
+                }
+
+            }
+            
+        }
+        
+    };
+    
     city.clear = function(){
         
         localStorage.removeItem("cities");

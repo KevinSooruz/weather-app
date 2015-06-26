@@ -1,5 +1,5 @@
 // Home controller
-app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random, Win, City){
+app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Random, Win, City){
     
     // today
     // http://api.openweathermap.org/data/2.5/find?q=bordeaux&units=metric&lang=fr&type=accurate
@@ -18,6 +18,10 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
     
     // Initialisation de l'affichage des villes sauvegardées
     $scope.viewCities = false;
+    $scope.cityExist = false;
+    
+    // Initialisation de l'affichage de la boite de dialogue pour ajout villes enregistrées
+    $scope.correctAdd = false;
     
     // Initialisation du bouton d'accès aux villes sauvegardées
     if(localStorage.getItem("cities")){
@@ -185,7 +189,32 @@ app.controller("homeCtrl", function($scope, $http, WindSpeed, Api, Ndate, Random
     // Ajout de données au stockage local
     $scope.addCity = function(name, country){
         
-        City.add(name, country);
+        var verification = City.verification(name, country);
+        
+        if(verification === "City Exist"){
+            
+            $scope.cityExist = true;
+            $scope.iconVerif = "glyphicon-remove";
+            $scope.verifText = "existe déjà dans vos favoris";
+            
+        }else{
+            
+            City.add(name, country);
+            $scope.cityExist = false;
+            $scope.iconVerif = "glyphicon-ok";
+            $scope.verifText = "a été ajouté à vos favoris";
+            
+        }
+        
+        // Affichage de la boite de dialogue
+        $scope.correctAdd = true;
+        
+        // Suppression de la boite de dialogue
+        $timeout(function(){
+            
+            $scope.correctAdd = false;
+            
+        }, 2500);
         
         // Ajout du bouton d'accès aux villes sauvegardées
         $scope.cities = true;

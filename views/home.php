@@ -75,3 +75,5 @@
 <div id="block3" class="block" ng-class="{hideCities: viewCities === false, showCities: viewCities === true}" ng-swipe-left="">
     
 </div>
+
+<div id="correctAddBox" ng-class="{show: correctAdd === true, hideCorrect: correctAdd === false, wrong: cityExist === true}"><i class="glyphicon {{iconVerif}}"></i> <b>{{cityName}}</b> {{verifText}}</div>
