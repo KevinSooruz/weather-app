@@ -76,6 +76,16 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     $scope.viewCity = function(){
         
         $scope.viewCities = true;
+        Random.run("headerCity");
+        
+        // Récupération des villes sauvegardées
+        $scope.cities = City.view();
+        
+    };
+    
+    $scope.hideCities = function(){
+        
+        $scope.viewCities = false;
         
     };
     
@@ -218,6 +228,14 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
         // Ajout du bouton d'accès aux villes sauvegardées
         $scope.cities = true;
+        
+    };
+    
+    // Suppression d'une ville du localStorage
+    $scope.removeCity = function(name, country){
+        
+        var index = City.remove(name, country);
+        $scope.cities.splice(index, 1);
         
     };
     

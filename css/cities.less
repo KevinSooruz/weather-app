@@ -12,5 +12,62 @@
             .translate3d(100%; 0; 0);
             .transition-duration(600ms);
         }
+        
+        #headerCity{
+            height: 140px;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative;
+            .center;
+            
+            .glyphicon{
+                top: 15px; left: 15px;
+                .absolute;
+                .fontSize(18px);
+            }
+            
+            .title{
+                .uppercase;
+                .fontSize(16px);
+                .f300;
+                display: inline-block;
+                margin-top: 65px;
+            }
+        }
+        
+        #listCities{
+            ul{
+                margin: 0;
+                padding: 0;
+
+                li{
+                    position: relative;
+                    margin: 0;
+                    padding: 15px 30px;
+                    list-style-type: none;
+                    border-bottom: 1px solid @extraLight;
+
+                    .name{
+                        color: @textHard;
+                        .fontSize(16px);
+                    }
+
+                    .country{
+                        color: @text;
+                        .fontSize(12px);
+                        .f300;
+                    }
+                    
+                    .glyphicon-remove{
+                        display: none;
+                    }
+                    
+                    &:last-of-type{
+                        border: none;
+                    }
+                }
+            }
+        }
     }
 }

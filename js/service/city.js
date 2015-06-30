@@ -2,6 +2,7 @@ services.factory("City", function(){
     
     var city = {};
     
+    // Ajouter une ville au localstorage
     city.add = function(name, country){
         
         // Si le stockage local "cities" existe
@@ -61,6 +62,7 @@ services.factory("City", function(){
         
     };
     
+    // Vérification si ville existe déjà ou non dans localstorage
     city.verification = function(name, country){
         
         if(localStorage.getItem("cities")){
@@ -87,9 +89,74 @@ services.factory("City", function(){
         
     };
     
+    // Effacer toutes les villes du localstorage
     city.clear = function(){
         
         localStorage.removeItem("cities");
+        
+    };
+    
+    // Afficher toutes les villes du localstorage
+    city.view = function(){
+        
+        if(localStorage.getItem("cities")){
+            
+            var citiesStock = JSON.parse(localStorage.getItem("cities"));
+            
+            return citiesStock;
+            
+        }
+        
+    };
+    
+    // Suppression d'une ville
+    city.remove = function(name, country){
+        
+        var citiesStock = JSON.parse(localStorage.getItem("cities"));
+        var citiesMax = citiesStock.length; // Nombre max de données stockées dans "cities"
+        var nameTest = name + "," + country; // Ville à supprimer
+        var city = [];
+        
+        // Création du nouvel objet à renvoyer au localStorage sans l'entrée à supprimer
+        var j = 0;
+        for(; j < citiesMax; j++){
+            
+            var cityCompareNew = citiesStock[j].name + "," + citiesStock[j].country; // Comparaison avec les villes du localStorage
+
+            if(nameTest !== cityCompareNew){
+                
+                // Récupération et envoi des anciennes données au nouveau tableau de données sinon écrasement des données
+                city.push({
+
+                    name: citiesStock[j].name,
+                    country: citiesStock[j].country
+
+                });
+                
+            }
+            
+        }
+
+        // Transformation JSON du nouvel objet
+        var cities = JSON.stringify(city);
+
+        // Mise à jour des données pour l'entrée "cities"
+        localStorage.setItem("cities", cities);
+
+        // Retour index au front
+        var i = 0;
+        for(; i < citiesMax; i++){
+            
+            var cityCompare = citiesStock[i].name + "," + citiesStock[i].country; // Comparaison avec les villes du localStorage
+
+            if(nameTest === cityCompare){
+                
+                // Si correspondance, renvoie de l'index i pour suppression du front
+                return i;
+                
+            }
+
+        }
         
     };
     

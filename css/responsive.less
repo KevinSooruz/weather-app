@@ -11,6 +11,10 @@
         }
         
         #all{
+            #correctAddBox{
+                .fontSize(18px);
+            }
+            
             .block{
                 .btnMaterial{
                     .absolute;
@@ -129,6 +133,60 @@
                             
                             .small{
                                 .fontSize(16px);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            #block3{
+                #headerCity{
+                    height: 350px;
+                    
+                    .glyphicon{
+                        top: 25px; left: 25px;
+                        .fontSize(25px);
+                        
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                    
+                    .title{
+                        .fontSize(36px);
+                        margin-top: 150px;
+                    }
+                }
+        
+                #listCities{
+                    ul{
+                        li{
+                            .name{
+                                .fontSize(25px);
+                            }
+
+                            .country{
+                                .fontSize(18px);
+                            }
+                            
+                            .glyphicon-remove{
+                                .absolute;
+                                top: 15px; right: 15px;
+                                color: @white;
+                                .fontSize(20px);
+                            }
+                            
+                            &:hover{
+                                .bgCol(@materialColor2);
+                                cursor: pointer;
+                                
+                                .name, .country{
+                                    color: @white;
+                                }
+                                
+                                .glyphicon-remove{
+                                    display: inline-block;
+                                }
                             }
                         }
                     }

@@ -72,8 +72,23 @@
     </div>
 </div>
 
+<!--Third block-->
 <div id="block3" class="block" ng-class="{hideCities: viewCities === false, showCities: viewCities === true}" ng-swipe-left="">
-    
+    <div id="headerCity" class="container-fluid">
+        <div class="filter filterBlue">
+            <i class="glyphicon glyphicon-menu-left" ng-click="hideCities()"></i>
+            <span class="title">Villes sauvegard&eacute;es</span>
+        </div>
+    </div>
+    <div id="listCities" class="container">
+        <ul>
+            <li ng-repeat="city in cities | orderBy: 'name' | orderBy: 'country'">
+                <i class="glyphicon glyphicon-remove" ng-click="removeCity(city.name, city.country)"></i>
+                <span class="name">{{city.name}}</span><br />
+                <span class="country">{{city.country}}</span>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <div id="correctAddBox" ng-class="{show: correctAdd === true, hideCorrect: correctAdd === false, wrong: cityExist === true}"><i class="glyphicon {{iconVerif}}"></i> <b>{{cityName}}</b> {{verifText}}</div>
