@@ -208,6 +208,24 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
     };
     
+    // Lancement d'une recherche à partir du localStorage
+    $scope.searchFromCities = function(city, country){
+        
+        // Retour accueil
+        $scope.viewCities = false;
+        
+        // Renseigne input du nom de la ville sélectionnée
+        $scope.city = city;
+        
+        // Délais de l'animation avant lancement de la fonction de recherche
+        $timeout(function(){
+            
+            $scope.search(city + "," + country);
+            
+        }, 600);
+        
+    };
+    
     // Ajout de données au stockage local
     $scope.addCity = function(name, country){
         

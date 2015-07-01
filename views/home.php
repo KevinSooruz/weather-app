@@ -82,7 +82,7 @@
     </div>
     <div id="listCities" class="container">
         <ul>
-            <li ng-repeat="city in cities | orderBy: 'name' | orderBy: 'country'">
+            <li ng-repeat="city in cities | orderBy: 'name' | orderBy: 'country'" ng-click="searchFromCities(city.name, city.country)">
                 <i class="glyphicon glyphicon-remove" ng-click="removeCity(city.name, city.country)"></i>
                 <span class="name">{{city.name}}</span><br />
                 <span class="country">{{city.country}}</span>
