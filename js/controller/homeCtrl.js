@@ -45,10 +45,10 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
     };
     
-    // Swipe right sur mobile pour revenir à l'accueil
+    // Swipe right sur mobile pour revenir à l'accueil depuis les températures
     $scope.hideResultSwipe = function(){
         
-        if(Win.width() < 771){
+        if(Win.width() <= 771){
             
             $scope.result = false;
             
@@ -59,7 +59,7 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     // Swipe left sur mobile revenir sur la page des résultats
     $scope.showResultSwipe = function(){
         
-        if(Win.width() < 771){
+        if(Win.width() <= 771){
             
             // Si on a un résultat possibilité de retour
             if(results === true){
@@ -83,9 +83,21 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
     };
     
+    // Revenir à l'accueil depuis le localStorage
     $scope.hideCities = function(){
         
         $scope.viewCities = false;
+        
+    };
+    
+    // Swipe right sur mobile pour revenir à l'accueil depuis le localStorage
+    $scope.hideCitiesSwipe = function(){
+        
+        if(Win.width() <= 771){
+            
+            $scope.viewCities = false;
+            
+        }
         
     };
     

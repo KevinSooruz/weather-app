@@ -73,7 +73,7 @@
 </div>
 
 <!--Third block-->
-<div id="block3" class="block" ng-class="{hideCities: viewCities === false, showCities: viewCities === true}" ng-swipe-left="">
+<div id="block3" class="block" ng-class="{hideCities: viewCities === false, showCities: viewCities === true}" ng-swipe-right="hideCitiesSwipe()">
     <div id="headerCity" class="container-fluid">
         <div class="filter filterBlue">
             <i class="glyphicon glyphicon-menu-left" ng-click="hideCities()"></i>
