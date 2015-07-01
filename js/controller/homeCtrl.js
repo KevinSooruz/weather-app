@@ -23,6 +23,9 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     // Initialisation de l'affichage de la boite de dialogue pour ajout villes enregistrées
     $scope.correctAdd = false;
     
+    // Initialisation de l'image de fond du localStorage
+    Random.run("headerCity");
+    
     // Initialisation du bouton d'accès aux villes sauvegardées
     if(localStorage.getItem("cities")){
         
@@ -45,7 +48,7 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
     };
     
-    // Swipe right sur mobile pour revenir à l'accueil depuis les températures
+    // Swipe right sur résultats (mobile) pour revenir à l'accueil
     $scope.hideResultSwipe = function(){
         
         if(Win.width() <= 771){
@@ -56,7 +59,7 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
     };
     
-    // Swipe left sur mobile revenir sur la page des résultats
+    // Swipe left sur accueil (mobile) pour revenir sur la page des résultats
     $scope.showResultSwipe = function(){
         
         if(Win.width() <= 771){
@@ -72,11 +75,10 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
     };
     
-    // Fonction d'accès aux villes sauvegardées
+    // Fonction d'accès aux villes sauvegardées (bouton)
     $scope.viewCity = function(){
         
         $scope.viewCities = true;
-        Random.run("headerCity");
         
         // Récupération des villes sauvegardées
         $scope.cities = City.view();
@@ -90,12 +92,23 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
     };
     
-    // Swipe right sur mobile pour revenir à l'accueil depuis le localStorage
+    // Swipe left sur villes (mobile) pour revenir à l'accueil
     $scope.hideCitiesSwipe = function(){
         
         if(Win.width() <= 771){
             
             $scope.viewCities = false;
+            
+        }
+        
+    };
+    
+    // Swipe right sur accueil (mobile) pour revenir sur la page des villes
+    $scope.showCitiesSwipe = function(){
+        
+        if(Win.width() <= 771){
+            
+            $scope.viewCity();
             
         }
         
@@ -208,21 +221,10 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
     };
     
-    // Lancement d'une recherche à partir du localStorage
-    $scope.searchFromCities = function(city, country){
+    // Retire class active sur la ville qui aurait pu être active dans la liste localStorage
+    $scope.removeIndexActif = function(){
         
-        // Retour accueil
-        $scope.viewCities = false;
-        
-        // Renseigne input du nom de la ville sélectionnée
-        $scope.city = city;
-        
-        // Délais de l'animation avant lancement de la fonction de recherche
-        $timeout(function(){
-            
-            $scope.search(city + "," + country);
-            
-        }, 600);
+        $scope.index = "";
         
     };
     
@@ -266,6 +268,44 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
         var index = City.remove(name, country);
         $scope.cities.splice(index, 1);
+        
+    };
+    
+    $scope.removeCityResponsive = function(name, country, index){
+        
+        $scope.indexMoveRight = false;
+        
+        // si déjà actif on supprime l'actif
+        if($scope.indexMoveLeft === index){
+            
+            $scope.indexMoveLeft = "";
+            
+        }else{
+            
+            $scope.indexMoveLeft = index;
+            
+        }
+        
+    };
+    
+    // Lancement d'une recherche à partir du localStorage
+    $scope.searchFromCities = function(city, country, index){
+        
+        // Retour accueil
+        $scope.viewCities = false;
+        
+        // Renseigne input du nom de la ville sélectionnée
+        $scope.city = city;
+        
+        // Délais de l'animation avant lancement de la fonction de recherche
+        $timeout(function(){
+            
+            $scope.search(city + "," + country);
+            
+        }, 600);
+        
+        // Ajout class active sur la ville sélectionnée
+        $scope.index = index;
         
     };
     

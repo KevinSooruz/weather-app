@@ -161,7 +161,7 @@
                     height: 350px;
                     
                     .glyphicon{
-                        top: 25px; left: 25px;
+                        top: 25px; right: 25px;
                         .fontSize(25px);
                         
                         &:hover{
@@ -196,9 +196,13 @@
                             .glyphicon-remove{
                                 display: inline-block;
                                 .absolute;
-                                top: 15px; right: 15px;
+                                top: 0; right: 15px;
                                 color: @extraLight;
                                 .fontSize(20px);
+                            }
+                            
+                            .glyphicon-option-vertical{
+                                display: none;
                             }
                             
                             &:hover{

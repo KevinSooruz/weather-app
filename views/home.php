@@ -1,5 +1,5 @@
 <!--First block-->
-<div id="block1" class="block" ng-class="{hideResponse: result === true || viewCities === true, show: result === false || viewCities === false}" ng-swipe-left="showResultSwipe()">
+<div id="block1" class="block" ng-class="{hideAnimeLeft: result === true, show: result === false || viewCities === false, hideAnimeRight: viewCities === true}" ng-swipe-left="showResultSwipe()" ng-swipe-right="showCitiesSwipe()">
     <button class="btn btnMaterial" ng-class="{none: cities === false}" ng-click="viewCity()"><i class="glyphicon glyphicon-option-vertical"></i></button>
     <header></header>
     <div class="content container">
@@ -13,7 +13,7 @@
                     <input type="search" placeholder="Ville" autocomplete="off" class="form-control" name="city" ng-model="city" ng-minlength="3" />
                 </div>
             </div>
-            <button class="btn btnGhostWhite btnGhostBig" type="submit" ng-click="search(city)" ng-class="{none: goSearch === true}">Rechercher</button>
+            <button class="btn btnGhostWhite btnGhostBig" type="submit" ng-click="search(city); removeIndexActif()" ng-class="{none: goSearch === true}">Rechercher</button>
         </form>
         <div id="loader" ng-class="{none: goSearch === false}">
             <span>Recherche en cours</span>
@@ -73,7 +73,7 @@
 </div>
 
 <!--Third block-->
-<div id="block3" class="block" ng-class="{hideCities: viewCities === false, showCities: viewCities === true}" ng-swipe-right="hideCitiesSwipe()">
+<div id="block3" class="block" ng-class="{hideCities: viewCities === false, showCities: viewCities === true}" ng-swipe-left="hideCitiesSwipe()">
     <div id="headerCity" class="container-fluid">
         <div class="filter filterBlue">
             <i class="glyphicon glyphicon-menu-left" ng-click="hideCities()"></i>
@@ -82,10 +82,17 @@
     </div>
     <div id="listCities" class="container">
         <ul>
-            <li ng-repeat="city in cities | orderBy: 'name' | orderBy: 'country'" ng-click="searchFromCities(city.name, city.country)">
-                <i class="glyphicon glyphicon-remove" ng-click="removeCity(city.name, city.country)"></i>
-                <span class="name">{{city.name}}</span><br />
-                <span class="country">{{city.country}}</span>
+            <li ng-repeat="city in cities | orderBy: 'name' | orderBy: 'country'" ng-class="{active: $index === index, moveLeft: $index === indexMoveLeft}">
+                <div class="row">
+                    <div class="col-md-11 col-sm-10 col-xs-10" ng-click="searchFromCities(city.name, city.country, $index)">
+                        <span class="name">{{city.name}}</span><br />
+                        <span class="country">{{city.country}}</span>
+                    </div>
+                    <div class="col-md-1 col-sm-2 col-xs-2">
+                        <i class="glyphicon glyphicon-remove" ng-click="removeCity(city.name, city.country)"></i>
+                        <i class="glyphicon glyphicon-option-vertical" ng-click="removeCityResponsive(city.name, city.country, $index)"></i>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
