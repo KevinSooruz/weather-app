@@ -93,9 +93,12 @@
                     }
                     
                     ul{
+                        margin: 15px 0 0 0;
+                        
                         li{
                             margin: 0;
                             padding: 25px 0;
+                            border-left: 3px solid @white;
                             
                             .dates{
                                 .otherDay{
@@ -134,6 +137,20 @@
                             .small{
                                 .fontSize(16px);
                             }
+                            
+                            &:hover{
+                                .bgCol(@extraxLight);
+                                border-left: 3px solid @materialColor2;
+                            }
+                            
+                            &:last-of-type{
+                                border-bottom: none;
+                                border-left: 3px solid @white;
+                                
+                                &:hover{
+                                    border-left: 3px solid @materialColor2;
+                                }
+                            }
                         }
                     }
                 }
@@ -160,7 +177,14 @@
         
                 #listCities{
                     ul{
+                        margin: 0;
+                        padding: 0;
+                        
                         li{
+                            margin: 0;
+                            padding: 20px 30px;
+                            border-left: 3px solid @white;
+                            
                             .name{
                                 .fontSize(25px);
                             }
@@ -170,22 +194,29 @@
                             }
                             
                             .glyphicon-remove{
+                                display: inline-block;
                                 .absolute;
                                 top: 15px; right: 15px;
-                                color: @white;
+                                color: @extraLight;
                                 .fontSize(20px);
                             }
                             
                             &:hover{
-                                .bgCol(@materialColor2);
+                                .bgCol(@extraxLight);
                                 cursor: pointer;
-                                
-                                .name, .country{
-                                    color: @white;
-                                }
+                                border-left: 3px solid @materialColor2;
                                 
                                 .glyphicon-remove{
-                                    display: inline-block;
+                                    color: @materialColor2;
+                                }
+                            }
+                            
+                            &:last-of-type{
+                                border-bottom: none;
+                                border-left: 3px solid @white;
+                                
+                                &:hover{
+                                    border-left: 3px solid @materialColor2;
                                 }
                             }
                         }

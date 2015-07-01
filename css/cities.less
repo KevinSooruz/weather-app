@@ -38,15 +38,16 @@
         
         #listCities{
             ul{
-                margin: 0;
+                margin: 10px 0 0 0;
                 padding: 0;
 
                 li{
                     position: relative;
-                    margin: 0;
+                    margin: 0 0 15px 0;
                     padding: 15px 30px;
                     list-style-type: none;
                     border-bottom: 1px solid @extraLight;
+                    border-left: 2px solid @materialColor2;
 
                     .name{
                         color: @textHard;
@@ -63,8 +64,14 @@
                         display: none;
                     }
                     
-                    &:last-of-type{
-                        border: none;
+                    &:active, &:focus{
+                        outline: none;
+                    }
+                    
+                    &:hover{
+                        &:active, &:focus{
+                            outline: none;
+                        }
                     }
                 }
             }
