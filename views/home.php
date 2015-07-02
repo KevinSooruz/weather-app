@@ -82,17 +82,18 @@
     </div>
     <div id="listCities" class="container">
         <ul>
-            <li ng-repeat="city in cities | orderBy: 'name' | orderBy: 'country'" ng-class="{active: $index === index, moveLeft: $index === indexMoveLeft}">
-                <div class="row">
+            <li ng-repeat="city in cities | orderBy: 'name' | orderBy: 'country'" ng-class="{moveLeftComplete: $index === completeDelete, moveTop: $index === deleteMoveTop}">
+                <div class="row cityName" ng-class="{active: $index === index, moveLeft: $index === indexMoveLeft, moveRight: $index !== indexMoveLeft, moveRight: $index === completeDelete}">
                     <div class="col-md-11 col-sm-10 col-xs-10" ng-click="searchFromCities(city.name, city.country, $index)">
                         <span class="name">{{city.name}}</span><br />
                         <span class="country">{{city.country}}</span>
                     </div>
                     <div class="col-md-1 col-sm-2 col-xs-2">
                         <i class="glyphicon glyphicon-remove" ng-click="removeCity(city.name, city.country)"></i>
-                        <i class="glyphicon glyphicon-option-vertical" ng-click="removeCityResponsive(city.name, city.country, $index)"></i>
+                        <i class="glyphicon glyphicon-option-vertical" ng-click="removeCityResponsive($index)"></i>
                     </div>
                 </div>
+                <button class="btn btnDelete" ng-click="deleteCityResponsive(city.name, city.country, $index)">Supprimer</button>
             </li>
         </ul>
     </div>

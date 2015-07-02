@@ -45,54 +45,87 @@
                 li{
                     position: relative;
                     margin: 0 0 15px 0;
-                    padding: 15px 30px;
+                    padding: 0;
                     list-style-type: none;
-                    border-bottom: 1px solid @extraLight;
-                    border-left: 2px solid @materialColor2;
-                    .translate3d(0; 0; 0);
-                    .transition-duration(600ms);
+                    
+                    .cityName{
+                        margin: 0;
+                        padding: 15px 0;
+                        border-bottom: 1px solid @extraLight;
+                        border-left: 2px solid @materialColor2;
+                        position: relative;
+                        z-index: 10;
+                        .bgCol(@white);
+                        
+                        .name{
+                            color: @textHard;
+                            .fontSize(16px);
+                        }
 
-                    .name{
-                        color: @textHard;
-                        .fontSize(16px);
-                    }
+                        .country{
+                            color: @text;
+                            .fontSize(12px);
+                            .f300;
+                        }
 
-                    .country{
-                        color: @text;
-                        .fontSize(12px);
-                        .f300;
-                    }
-                    
-                    .glyphicon-remove{
-                        display: none;
-                    }
-                    
-                    .glyphicon-option-vertical{
-                        .absolute;
-                        top: 0; right: 5px;
-                        color: @text;
-                    }
-                    
-                    &:active, &:focus{
-                        outline: none;
-                    }
-                    
-                    &:hover{
+                        .glyphicon-remove{
+                            display: none;
+                        }
+
+                        .glyphicon-option-vertical{
+                            .absolute;
+                            top: 0; right: 5px;
+                            color: @text;
+                        }
+
                         &:active, &:focus{
                             outline: none;
                         }
-                    }
-                    
-                    &.active{
-                        .bgCol(@extraxLight);
-                        
-                        .glyphicon-option-vertical{
-                            color: @materialColor2;
+
+                        &:hover{
+                            &:active, &:focus{
+                                outline: none;
+                            }
+                        }
+
+                        &.active{
+                            .bgCol(@extraxLight);
+
+                            .glyphicon-option-vertical{
+                                color: @materialColor2;
+                            }
+                        }
+
+                        &.moveLeft{
+                            .translate3d(-110px; 0; 0);
+                            .transition-duration(600ms);
+                        }
+
+                        &.moveRight{
+                            .translate3d(0; 0; 0);
+                            .transition-duration(600ms);
                         }
                     }
                     
-                    &.moveLeft{
-                        .translate3d(-30%; 0; 0);
+                    .btnDelete{
+                        .absolute;
+                        top: 20px; right: 0;
+                        z-index: 0;
+                        .fontSize(12px);
+                        .bgCol(@materialColor);
+                        
+                        &:hover, &:focus{
+                            color: @white;
+                        }
+                    }
+                    
+                    &.moveLeftComplete{
+                        .translate3d(-150%; 0; 0);
+                        .transition-duration(600ms);
+                    }
+                    
+                    &.moveTop{
+                        margin-top: -90px;
                         .transition-duration(600ms);
                     }
                 }

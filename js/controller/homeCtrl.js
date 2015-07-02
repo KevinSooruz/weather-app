@@ -90,6 +90,9 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
         $scope.viewCities = false;
         
+        // Ville à supprimer revient en position normale
+        $scope.indexMoveLeft = "";
+        
     };
     
     // Swipe left sur villes (mobile) pour revenir à l'accueil
@@ -98,6 +101,9 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         if(Win.width() <= 771){
             
             $scope.viewCities = false;
+            
+            // Ville à supprimer revient en position normale
+            $scope.indexMoveLeft = "";
             
         }
         
@@ -271,7 +277,8 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
     };
     
-    $scope.removeCityResponsive = function(name, country, index){
+    // Affichage bouton qui permet suppression d'une ville du localStorage responsive
+    $scope.removeCityResponsive = function(index){
         
         $scope.indexMoveRight = false;
         
@@ -285,6 +292,36 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
             $scope.indexMoveLeft = index;
             
         }
+        
+    };
+    
+    // Suppression d'une ville du localStorage responsive
+    $scope.deleteCityResponsive = function(name, country, index){
+        
+        // Résupération de l'index pour suppression front + suppression localStorage
+        var indexSplice = City.remove(name, country);
+        
+        // Move left pour index cliqué
+        $scope.completeDelete = index;
+        
+        $timeout(function(){
+            
+            // Move top pour index cliqué pour faire remonter les résultats
+            $scope.deleteMoveTop = index;
+            
+        }, 600);
+        
+        $timeout(function(){
+            
+            // Suppression de les animations sur l'index
+            $scope.completeDelete = "";
+            $scope.indexMoveLeft = "";
+            $scope.deleteMoveTop = "";
+            
+            // Suppression produit localStorage définitif
+            $scope.cities.splice(indexSplice, 1);
+            
+        }, 1200);
         
     };
     

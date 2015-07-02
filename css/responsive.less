@@ -182,46 +182,62 @@
                         
                         li{
                             margin: 0;
-                            padding: 20px 30px;
+                            padding: 0;
                             border-left: 3px solid @white;
+                            border-bottom: 1px solid @extraLight;
                             
-                            .name{
-                                .fontSize(25px);
-                            }
+                            .cityName{
+                                padding: 20px 30px;
+                                border: none;
+                                
+                                .name{
+                                    .fontSize(25px);
+                                }
 
-                            .country{
-                                .fontSize(18px);
-                            }
-                            
-                            .glyphicon-remove{
-                                display: inline-block;
-                                .absolute;
-                                top: 0; right: 15px;
-                                color: @extraLight;
-                                .fontSize(20px);
-                            }
-                            
-                            .glyphicon-option-vertical{
-                                display: none;
+                                .country{
+                                    .fontSize(18px);
+                                }
+
+                                .glyphicon-remove{
+                                    display: inline-block;
+                                    .absolute;
+                                    top: 0; right: 15px;
+                                    color: @extraLight;
+                                    .fontSize(20px);
+                                }
+
+                                .glyphicon-option-vertical{
+                                    display: none;
+                                }
+                                
+                                &:hover{
+                                    border: none;
+                                }
                             }
                             
                             &:hover{
                                 .bgCol(@extraxLight);
                                 cursor: pointer;
                                 border-left: 3px solid @materialColor2;
-                                
-                                .glyphicon-remove{
-                                    color: @materialColor2;
+
+                                .cityName{
+                                    .glyphicon-remove{
+                                        color: @materialColor2;
+                                    }
                                 }
                             }
                             
                             &:last-of-type{
                                 border-bottom: none;
                                 border-left: 3px solid @white;
-                                
+
                                 &:hover{
                                     border-left: 3px solid @materialColor2;
                                 }
+                            }
+                            
+                            .btnDelete{
+                                display: none;
                             }
                         }
                     }
