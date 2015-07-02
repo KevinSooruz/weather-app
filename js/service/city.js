@@ -62,7 +62,7 @@ services.factory("City", function(){
         
     };
     
-    // Vérification si ville existe déjà ou non dans localstorage
+    // Vérification si ville existe déjà ou non dans localstorage pour message confirmation ou erreur
     city.verification = function(name, country){
         
         if(localStorage.getItem("cities")){
@@ -155,6 +155,34 @@ services.factory("City", function(){
                 return i;
                 
             }
+
+        }
+        
+    };
+    
+    // Initialisation du bouton et swipe si ville dans localStorage
+    city.exist = function(){
+        
+        // Si localStorage "cities" existe
+        if(localStorage.getItem("cities")){
+            
+            var citiesStock = JSON.parse(localStorage.getItem("cities")); // Récupération des données locales pour "cities"
+            var citiesMax = citiesStock.length; // Nombre max de données stockées dans "cities"
+            
+            // Si localstorage vide retourne faux donc n'affiche pas
+            if(citiesMax <= 0){
+                
+                return false;
+                
+            }else{
+                
+                return true;
+                
+            }
+
+        }else{
+            
+            return false;
 
         }
         

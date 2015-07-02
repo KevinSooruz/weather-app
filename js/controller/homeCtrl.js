@@ -27,15 +27,7 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     Random.run("headerCity");
     
     // Initialisation du bouton d'accès aux villes sauvegardées
-    if(localStorage.getItem("cities")){
-        
-        $scope.cities = true;
-        
-    }else{
-        
-        $scope.cities = false;
-        
-    }
+    $scope.cities = City.exist();
     
     // Initialisation des résultats pour le swipe
     var results;
@@ -112,9 +104,13 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     // Swipe right sur accueil (mobile) pour revenir sur la page des villes
     $scope.showCitiesSwipe = function(){
         
-        if(Win.width() <= 771){
+        if(City.exist() === true){
             
-            $scope.viewCity();
+            if(Win.width() <= 771){
+            
+                $scope.viewCity();
+            
+            }
             
         }
         
@@ -140,9 +136,6 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
         // Lancement de la recherche pour le jour en cours et les jours suivants = requête api
         Api.get("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=" + maxDays + "&lang=fr&type=accurate").then(function(response){
-            
-            console.log(response);
-            console.log(response.cod);
             
             // Fin du loader
             $scope.goSearch = false;
