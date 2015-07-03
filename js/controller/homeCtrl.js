@@ -263,17 +263,21 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     };
     
     // Suppression d'une ville du localStorage
-    $scope.removeCity = function(name, country){
+    $scope.removeCity = function(name, country, max){
         
+        // Résupération de l'index pour suppression front + suppression localStorage
         var index = City.remove(name, country);
+        
+        // Suppression ville définitif du front
         $scope.cities.splice(index, 1);
+        
+        // Si le nombre de ville est inférieur ou égal à 1 (dernier résultat, on revienr à l'accueil)
+        backHome(max);
         
     };
     
     // Affichage bouton qui permet suppression d'une ville du localStorage responsive
     $scope.removeCityResponsive = function(index){
-        
-        $scope.indexMoveRight = false;
         
         // si déjà actif on supprime l'actif
         if($scope.indexMoveLeft === index){
@@ -289,7 +293,10 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     };
     
     // Suppression d'une ville du localStorage responsive
-    $scope.deleteCityResponsive = function(name, country, index){
+    $scope.deleteCityResponsive = function(name, country, index, max){
+        
+        // Supprime la class active
+        $scope.index = "";
         
         // Résupération de l'index pour suppression front + suppression localStorage
         var indexSplice = City.remove(name, country);
@@ -302,6 +309,9 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
             // Move top pour index cliqué pour faire remonter les résultats
             $scope.deleteMoveTop = index;
             
+            // Si le nombre de ville est inférieur ou égal à 1 (dernier résultat, on revienr à l'accueil)
+            backHome(max);
+            
         }, 600);
         
         $timeout(function(){
@@ -311,10 +321,26 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
             $scope.indexMoveLeft = "";
             $scope.deleteMoveTop = "";
             
-            // Suppression produit localStorage définitif
+            // Suppression ville définitif du front
             $scope.cities.splice(indexSplice, 1);
             
         }, 1200);
+        
+    };
+    
+    // Retour accueil après suppression ville si plus de ville
+    var backHome = function(max){
+        
+        // Si le nombre de ville est inférieur ou égal à 1 (dernier résultat, on revienr à l'accueil)
+        if(max <= 1){
+                
+            // Retour accueil
+            $scope.viewCities = false;
+
+            // Suppression vouton accueil
+            $scope.cities = false;
+
+        }
         
     };
     
