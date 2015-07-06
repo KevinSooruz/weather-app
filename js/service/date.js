@@ -25,6 +25,21 @@ services.factory("Ndate", function(){
         
     };
     
+    ndate.hour = function(number){
+        
+        var hour = ndate.timestamp(number).getUTCHours(); // Heure de la date locale (UTC)
+        
+        // Si heure inférieure à 10, ajouter un "0" devant le premier chiffre
+        if(hour < 10){
+            
+            hour = "0" + hour;
+            
+        }
+        
+        return hour;
+        
+    };
+    
     ndate.timestamp = function(time){
         
         return new Date(time * 1000);
