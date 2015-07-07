@@ -145,29 +145,10 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
                 // Modification de l'état de la requête
                 $scope.result = true;
                 results = true;
-
-                // Envoi des données de la réponse au front
-                // Jour actuel
-                $scope.cityName = response.name;
-                $scope.cityCountry = response.sys.country;
-                $scope.temperatureDay = (response.main.temp).toFixed(0);
-                $scope.iconDayActif = response.weather[0].icon;
-                $scope.dayActif = Ndate.day(response.dt);
-                $scope.dateActif = Ndate.fullDate(response.dt);
-                $scope.humidityDay = response.main.humidity.toFixed(0);
-                $scope.pressureDay = response.main.pressure.toFixed(0);
-                $scope.speedDay = WindSpeed.km(response.wind.speed).toFixed(0);
-
-                if(response.main.rain){
-
-                    $scope.rain = "- Précipitations : " + response.list[0].rain + " mm";
-
-                }else{
-
-                    $scope.rain = "";
-
-                }
                 
+                // Envoi des données de la réponse au front
+                successDay(response);
+
                 // Autres jours
                 // Nombre de jours souhaités dans la recherche des autres jours
                 var maxDays = 10;
@@ -177,37 +158,8 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
                 
                 Api.get(urlDaily).then(function(responseDays){
                     
-                    var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
-                    
-                    // Boucle des infos (création d'objets) à envoyer au tableau pour le front
-                    var i = 1; // 1 car 0 = jour actuel
-                    for(; i < maxDays; i++){
-
-                        var rainResponse;
-                        if(responseDays.list[i].rain){
-
-                            rainResponse = "Précipitations : " +  responseDays.list[i].rain + " mm";
-
-                        }
-
-                        daysInfo.push({
-
-                            day: Ndate.day(responseDays.list[i].dt),
-                            date: Ndate.fullDate(responseDays.list[i].dt),
-                            temp: responseDays.list[i].temp.max.toFixed(0),
-                            minTemp: responseDays.list[i].temp.min.toFixed(0),
-                            icon: responseDays.list[i].weather[0].icon,
-                            humidityOtherDay: responseDays.list[i].humidity.toFixed(0),
-                            pressureOtherDay: responseDays.list[i].pressure.toFixed(0),
-                            speedOtherDay : WindSpeed.km(responseDays.list[i].speed).toFixed(0),
-                            rainOtherDay: rainResponse
-
-                        });
-
-                    }
-
-                    // tabeau des résultats envoyé au front
-                    $scope.days = daysInfo;
+                    // Envoi des données de la réponse au front
+                    successOtherDay(responseDays, maxDays);
                     
                 }).catch(function(error, data, status, config){
 
@@ -231,6 +183,69 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
             $scope.goSearch = false;
     
         });
+        
+    };
+    
+    // Fonction affichage du jour en cours si requête ok
+    var successDay = function(response){
+        
+        // Jour actuel
+        $scope.cityName = response.name;
+        $scope.cityCountry = response.sys.country;
+        $scope.temperatureDay = (response.main.temp).toFixed(0);
+        $scope.iconDayActif = response.weather[0].icon;
+        $scope.dayActif = Ndate.day(response.dt);
+        $scope.dateActif = Ndate.fullDate(response.dt);
+        $scope.humidityDay = response.main.humidity.toFixed(0);
+        $scope.pressureDay = response.main.pressure.toFixed(0);
+        $scope.speedDay = WindSpeed.km(response.wind.speed).toFixed(0);
+
+        if(response.main.rain){
+
+            $scope.rain = "- Précipitations : " + response.list[0].rain + " mm";
+
+        }else{
+
+            $scope.rain = "";
+
+        }
+        
+    };
+    
+    // Fonction affichage des jours de la semain si requête ok
+    var successOtherDay = function(response, maxDays){
+        
+        var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
+                    
+        // Boucle des infos (création d'objets) à envoyer au tableau pour le front
+        var i = 1; // 1 car 0 = jour actuel
+        for(; i < maxDays; i++){
+
+            var rainResponse;
+            if(response.list[i].rain){
+
+                rainResponse = "Précipitations : " +  response.list[i].rain + " mm";
+
+            }
+
+            daysInfo.push({
+
+                day: Ndate.day(response.list[i].dt),
+                date: Ndate.fullDate(response.list[i].dt),
+                temp: response.list[i].temp.max.toFixed(0),
+                minTemp: response.list[i].temp.min.toFixed(0),
+                icon: response.list[i].weather[0].icon,
+                humidityOtherDay: response.list[i].humidity.toFixed(0),
+                pressureOtherDay: response.list[i].pressure.toFixed(0),
+                speedOtherDay : WindSpeed.km(response.list[i].speed).toFixed(0),
+                rainOtherDay: rainResponse
+
+            });
+
+        }
+
+        // tabeau des résultats envoyé au front
+        $scope.days = daysInfo;
         
     };
     
