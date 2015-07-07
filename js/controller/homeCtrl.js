@@ -131,11 +131,14 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         // Lancement du loader
         $scope.goSearch = true;
         
+        // Nombre de jours souhaités dans la recherche des autres jours
+        var maxDays = 10;
+        
         // URL du jour actuel
-        var urlDay = "http://api.openweathermap.org/data/2.5/find?q=" + city + "&units=metric&lang=fr&type=accurate";
+        var url = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=" + maxDays + "&lang=fr&type=accurate";
 
         // Lancement de la recherche pour le jour actuel
-        Api.get(urlDay).then(function(response){
+        Api.get(url).then(function(response){
 
             // Fin du loader
             $scope.goSearch = false;
@@ -150,15 +153,15 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
 
                 // Envoi des données de la réponse au front
                 // Jour actuel
-                $scope.cityName = response.list[0].name;
-                $scope.cityCountry = response.list[0].sys.country;
-                $scope.temperatureDay = (response.list[0].main.temp).toFixed(0);
+                $scope.cityName = response.city.name;
+                $scope.cityCountry = response.city.country;
+                $scope.temperatureDay = (response.list[0].temp.max).toFixed(0);
                 $scope.iconDayActif = response.list[0].weather[0].icon;
                 $scope.dayActif = Ndate.day(response.list[0].dt);
                 $scope.dateActif = Ndate.fullDate(response.list[0].dt);
-                $scope.humidityDay = response.list[0].main.humidity.toFixed(0);
-                $scope.pressureDay = response.list[0].main.pressure.toFixed(0);
-                $scope.speedDay = WindSpeed.km(response.list[0].wind.speed).toFixed(0);
+                $scope.humidityDay = response.list[0].humidity.toFixed(0);
+                $scope.pressureDay = response.list[0].pressure.toFixed(0);
+                $scope.speedDay = WindSpeed.km(response.list[0].speed).toFixed(0);
 
                 if(response.list[0].rain){
 
@@ -170,52 +173,38 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
 
                 }
                 
-                // Nombre de jours souhaités dans la recherche des autres jours
-                var maxDays = 10;
-                
-                // Lancement de la recherche pour le jour en cours et les jours suivants (daily)
-                var urlDaily = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=" + maxDays + "&lang=fr&type=accurate";
-                
-                Api.get(urlDaily).then(function(responseDaily){
-            
-                    // Autres jours
-                    var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
+                // Autres jours
+                var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
 
-                    // Boucle des infos (création d'objets) à envoyer au tableau pour le front
-                    var i = 1; // 1 car 0 = jour actuel
-                    for(; i < maxDays; i++){
+                // Boucle des infos (création d'objets) à envoyer au tableau pour le front
+                var i = 1; // 1 car 0 = jour actuel
+                for(; i < maxDays; i++){
 
-                        var rainResponse;
-                        if(responseDaily.list[i].rain){
+                    var rainResponse;
+                    if(response.list[i].rain){
 
-                            rainResponse = "Précipitations : " +  responseDaily.list[i].rain + " mm";
-
-                        }
-
-                        daysInfo.push({
-
-                            day: Ndate.day(responseDaily.list[i].dt),
-                            date: Ndate.fullDate(responseDaily.list[i].dt),
-                            temp: responseDaily.list[i].temp.max.toFixed(0),
-                            minTemp: responseDaily.list[i].temp.min.toFixed(0),
-                            icon: responseDaily.list[i].weather[0].icon,
-                            humidityOtherDay: responseDaily.list[i].humidity.toFixed(0),
-                            pressureOtherDay: responseDaily.list[i].pressure.toFixed(0),
-                            speedOtherDay : WindSpeed.km(responseDaily.list[i].speed).toFixed(0),
-                            rainOtherDay: rainResponse
-
-                        });
+                        rainResponse = "Précipitations : " +  response.list[i].rain + " mm";
 
                     }
 
-                    // tabeau des résultats envoyé au front
-                    $scope.days = daysInfo;
-                    
-                }).catch(function(error, data, status, config){
+                    daysInfo.push({
 
-                    console.error(error, data, status, config);
+                        day: Ndate.day(response.list[i].dt),
+                        date: Ndate.fullDate(response.list[i].dt),
+                        temp: response.list[i].temp.max.toFixed(0),
+                        minTemp: response.list[i].temp.min.toFixed(0),
+                        icon: response.list[i].weather[0].icon,
+                        humidityOtherDay: response.list[i].humidity.toFixed(0),
+                        pressureOtherDay: response.list[i].pressure.toFixed(0),
+                        speedOtherDay : WindSpeed.km(response.list[i].speed).toFixed(0),
+                        rainOtherDay: rainResponse
 
-                });
+                    });
+
+                }
+
+                // tabeau des résultats envoyé au front
+                $scope.days = daysInfo;
             
             }else{
                 
@@ -378,6 +367,9 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         
         // Ajout class active sur la ville sélectionnée
         $scope.index = index;
+        
+        // Position départ animation suppression ville
+        $scope.indexMoveLeft = "";
         
     };
     

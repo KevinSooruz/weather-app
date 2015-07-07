@@ -28,7 +28,9 @@
 @extraLight: #eee;
 @extraxLight: #f8f8f8;
 @materialColor: #ff3166;
+@materialColorDark: darken(@materialColor, 5%);
 @materialColor2: #4fd2c2;
+@materialColor2Dark: darken(@materialColor2, 5%);
 
 @heightHeader: 110px;
 
@@ -93,6 +95,10 @@ body{
     .absolute;
     top: 0; bottom: 0; left: 0; right: 0;
     
+    h1, .h1{
+        .fontSize(30px);
+    }
+    
     #all{
         overflow: hidden;
         .absolute;
@@ -116,6 +122,13 @@ body{
             color: @white;
             border: 1px solid @white;
             .border-radius(0px);
+        }
+        
+        .btnFlatGreen{
+            .bgCol(@materialColor2);
+            color: @white;
+            .border-radius(0px);
+            .fontSize(14px);
         }
         
         .btnGhostBig{

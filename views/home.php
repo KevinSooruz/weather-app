@@ -13,7 +13,7 @@
                     <input type="search" placeholder="Ville" autocomplete="off" class="form-control" name="city" ng-model="city" ng-minlength="3" />
                 </div>
             </div>
-            <button class="btn btnGhostWhite btnGhostBig" type="submit" ng-click="search(city); removeIndexActif()" ng-class="{none: goSearch === true}">Rechercher</button>
+            <button class="btn btnFlatGreen btnGhostBig" type="submit" ng-click="search(city); removeIndexActif()" ng-class="{none: goSearch === true}">Rechercher</button>
         </form>
         <div id="loader" ng-class="{none: goSearch === false}">
             <span>Recherche en cours</span>
