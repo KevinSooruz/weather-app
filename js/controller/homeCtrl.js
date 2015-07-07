@@ -148,8 +148,6 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
                 // Modification de l'état de la requête
                 $scope.result = true;
                 results = true;
-                
-                console.log(response);
 
                 // Envoi des données de la réponse au front
                 // Jour actuel
