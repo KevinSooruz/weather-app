@@ -131,11 +131,8 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
         // Lancement du loader
         $scope.goSearch = true;
         
-        // Nombre de jours souhaités dans la recherche des autres jours
-        var maxDays = 10;
-        
         // URL du jour actuel
-        var url = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=" + maxDays + "&lang=fr&type=accurate";
+        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&mode=json&lang=fr&type=accurate";
 
         // Lancement de la recherche pour le jour actuel
         Api.get(url).then(function(response){
@@ -151,17 +148,17 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
 
                 // Envoi des données de la réponse au front
                 // Jour actuel
-                $scope.cityName = response.city.name;
-                $scope.cityCountry = response.city.country;
-                $scope.temperatureDay = (response.list[0].temp.max).toFixed(0);
-                $scope.iconDayActif = response.list[0].weather[0].icon;
-                $scope.dayActif = Ndate.day(response.list[0].dt);
-                $scope.dateActif = Ndate.fullDate(response.list[0].dt);
-                $scope.humidityDay = response.list[0].humidity.toFixed(0);
-                $scope.pressureDay = response.list[0].pressure.toFixed(0);
-                $scope.speedDay = WindSpeed.km(response.list[0].speed).toFixed(0);
+                $scope.cityName = response.name;
+                $scope.cityCountry = response.sys.country;
+                $scope.temperatureDay = (response.main.temp).toFixed(0);
+                $scope.iconDayActif = response.weather[0].icon;
+                $scope.dayActif = Ndate.day(response.dt);
+                $scope.dateActif = Ndate.fullDate(response.dt);
+                $scope.humidityDay = response.main.humidity.toFixed(0);
+                $scope.pressureDay = response.main.pressure.toFixed(0);
+                $scope.speedDay = WindSpeed.km(response.wind.speed).toFixed(0);
 
-                if(response.list[0].rain){
+                if(response.main.rain){
 
                     $scope.rain = "- Précipitations : " + response.list[0].rain + " mm";
 
@@ -172,38 +169,52 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
                 }
                 
                 // Autres jours
-                var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
+                // Nombre de jours souhaités dans la recherche des autres jours
+                var maxDays = 10;
+        
+                // URL du jour actuel
+                var urlDaily = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&mode=json&units=metric&cnt=" + maxDays + "&lang=fr&type=accurate";
+                
+                Api.get(urlDaily).then(function(responseDays){
+                    
+                    var daysInfo = []; // Création d'un tableau pour personnalisation des données envoyées au front (notamment la date)
+                    
+                    // Boucle des infos (création d'objets) à envoyer au tableau pour le front
+                    var i = 1; // 1 car 0 = jour actuel
+                    for(; i < maxDays; i++){
 
-                // Boucle des infos (création d'objets) à envoyer au tableau pour le front
-                var i = 1; // 1 car 0 = jour actuel
-                for(; i < maxDays; i++){
+                        var rainResponse;
+                        if(responseDays.list[i].rain){
 
-                    var rainResponse;
-                    if(response.list[i].rain){
+                            rainResponse = "Précipitations : " +  responseDays.list[i].rain + " mm";
 
-                        rainResponse = "Précipitations : " +  response.list[i].rain + " mm";
+                        }
+
+                        daysInfo.push({
+
+                            day: Ndate.day(responseDays.list[i].dt),
+                            date: Ndate.fullDate(responseDays.list[i].dt),
+                            temp: responseDays.list[i].temp.max.toFixed(0),
+                            minTemp: responseDays.list[i].temp.min.toFixed(0),
+                            icon: responseDays.list[i].weather[0].icon,
+                            humidityOtherDay: responseDays.list[i].humidity.toFixed(0),
+                            pressureOtherDay: responseDays.list[i].pressure.toFixed(0),
+                            speedOtherDay : WindSpeed.km(responseDays.list[i].speed).toFixed(0),
+                            rainOtherDay: rainResponse
+
+                        });
 
                     }
 
-                    daysInfo.push({
+                    // tabeau des résultats envoyé au front
+                    $scope.days = daysInfo;
+                    
+                }).catch(function(error, data, status, config){
 
-                        day: Ndate.day(response.list[i].dt),
-                        date: Ndate.fullDate(response.list[i].dt),
-                        temp: response.list[i].temp.max.toFixed(0),
-                        minTemp: response.list[i].temp.min.toFixed(0),
-                        icon: response.list[i].weather[0].icon,
-                        humidityOtherDay: response.list[i].humidity.toFixed(0),
-                        pressureOtherDay: response.list[i].pressure.toFixed(0),
-                        speedOtherDay : WindSpeed.km(response.list[i].speed).toFixed(0),
-                        rainOtherDay: rainResponse
+                    console.error(error, data, status, config);
 
-                    });
-
-                }
-
-                // tabeau des résultats envoyé au front
-                $scope.days = daysInfo;
-            
+                });
+                
             }else{
                 
                 return;
