@@ -23,8 +23,8 @@ module.exports = function(grunt) {
         },
         target: {
             files: {
-                "js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js", "js/service/windSpeed.js", "js/service/api.js", "js/service/date.js", "js/service/random.js", "js/service/win.js", "js/service/city.js"],
-                "dist/js/app.js" : ["js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js", "js/service/windSpeed.js" , "js/service/api.js", "js/service/date.js", "js/service/random.js", "js/service/win.js", "js/service/city.js"]
+                "js/app.js" : ["js/controller/app.js", "js/controller/routeCtrl.js", "js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js", "js/service/windSpeed.js", "js/service/api.js", "js/service/date.js", "js/service/random.js", "js/service/win.js", "js/service/city.js"],
+                "dist/js/app.js" : ["js/controller/app.js", "js/controller/routeCtrl.js", "js/controller/allCtrl.js", "js/controller/homeCtrl.js", "js/directive/header.js", "js/directive/footer.js", "js/service/windSpeed.js" , "js/service/api.js", "js/service/date.js", "js/service/random.js", "js/service/win.js", "js/service/city.js"]
             }
         }
     },
