@@ -10,6 +10,9 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     // weather conditions
     // http://openweathermap.org/weather-conditions
     
+    var test;
+    test = false;
+    
     // Initialisation du loader
     $scope.goSearch = false;
     
@@ -24,7 +27,7 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     $scope.correctAdd = false;
     
     // Initialisation de l'image de fond du localStorage
-    Random.run("headerCity");
+    $scope.bgCity = "url('images/bg" + Random.run() + ".jpg')";
     
     // Initialisation du bouton d'accès aux villes sauvegardées
     $scope.cities = City.exist();
@@ -120,7 +123,7 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     $scope.search = function(city){
         
         // Random background
-        Random.run("weatherDay");
+        $scope.bgWeather = "url('images/bg" + Random.run() + ".jpg')";
         
         if($scope.searchCity.city.$error.minlength === true || city === undefined || city === ""){
             

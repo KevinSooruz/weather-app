@@ -47,8 +47,8 @@
     <div id="all" ng-controller="allCtrl" ng-view></div>
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-route.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-touch.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-route.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-touch.min.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 
 </body>

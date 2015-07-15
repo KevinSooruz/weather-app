@@ -24,7 +24,7 @@
 
 <!--Second block-->
 <div id="block2" class="block" ng-class="{show: result === true, hideResponse: result === false}" ng-swipe-right="hideResultSwipe()">
-    <div id="weatherDay">
+    <div id="weatherDay" style="background-image: {{bgWeather}}">
         <div class="filter filterBlue">
             <div class="container">
                 <div id="city">
@@ -74,7 +74,7 @@
 
 <!--Third block-->
 <div id="block3" class="block" ng-class="{hideCities: viewCities === false, showCities: viewCities === true}" ng-swipe-left="hideCitiesSwipe()">
-    <div id="headerCity" class="container-fluid">
+    <div id="headerCity" class="container-fluid" style="background-image: {{bgCity}}">
         <div class="filter filterBlue">
             <i class="glyphicon glyphicon-menu-left" ng-click="hideCities()"></i>
             <span class="title">Villes sauvegard&eacute;es</span>
