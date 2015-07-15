@@ -10,9 +10,6 @@ app.controller("homeCtrl", function($scope, $timeout, WindSpeed, Api, Ndate, Ran
     // weather conditions
     // http://openweathermap.org/weather-conditions
     
-    var test;
-    test = false;
-    
     // Initialisation du loader
     $scope.goSearch = false;
     
